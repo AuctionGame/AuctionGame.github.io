@@ -12,7 +12,7 @@ class Predict extends React.Component {
     super(props);
     this.state = {
       predictionArray: [],
-      open: 0,
+      open: false,
       dialogName: 'Confirm',
       confirmNumber: 0,
     };
@@ -23,14 +23,14 @@ class Predict extends React.Component {
 
   /* This function just closes the dialog */
   handleDialogClose = () => {
-    this.setState({ open: 0 });
+    this.setState({ open: false });
   };
 
   /* This function handles the confirm prediciton dialog */
   handleDialogOpen = (title, number) => {
     this.setState({
       dialogName: `Confirm ${title}`,
-      open: 1,
+      open: true,
       confirmNumber: number,
     });
   };
@@ -49,7 +49,7 @@ class Predict extends React.Component {
     // Finally update the current state of this class
     this.setState({
       predictionArray: newArr,
-      open: 0,
+      open: false,
     });
   };
 
@@ -58,7 +58,7 @@ class Predict extends React.Component {
     console.log(number);
 
     if (!this.state.predictionArray.includes(number)) {
-      this.handleDialogOpen('MSD', number);
+      this.handleDialogOpen(this.players[0], number);
     } else {
       console.log('Already Predicted this one');
     }
