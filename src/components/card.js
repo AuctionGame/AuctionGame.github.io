@@ -4,13 +4,25 @@ class Card extends React.Component {
   render() {
     const img = this.props.img;
     const name = this.props.name;
+
+    const status = this.props.status;
+    var color = 'btn-primary';
+    var text = 'Predict';
+    if (status) {
+      color = 'btn-success';
+      text = 'Predicted';
+    }
+
     return (
-      <div className="col-sm-6 col-md-4 col-lg-2">
+      <div className="col-sm-4 col-md-3 col-lg-2">
         <div className="card gallery-item">
           <img className="card-img-top" src={img} alt={name} />
           <div className="card-body">
             <h5 className="card-title">{name}</h5>
-            <button className="btn btn-primary">Predict</button>
+            <button onClick={this.props.handler} className={`btn ${color}`}>
+              {' '}
+              {text}{' '}
+            </button>
 
             {/* add on click to this button  */}
           </div>

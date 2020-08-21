@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from '@material-ui/core/Input';
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 class Quiz extends React.Component {
   constructor(props) {

@@ -1,9 +1,8 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
-import * as firebase from 'firebase';
-
-
+import firebase from 'firebase/app';
+import 'firebase/firestore'
 
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -50,7 +49,7 @@ class App extends React.Component {
 
     doc.onSnapshot(
       (snap) => {
-        console.log('Recieved pid', snap.data().pid);
+        console.log('Recieved Round Info', snap.data().pid);
         this.updateRound(snap.data().pid);
       },
       (err) => {
@@ -102,7 +101,6 @@ class App extends React.Component {
       );
     }
   } // End of render
-
 }
 
 export default App;
