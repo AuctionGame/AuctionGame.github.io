@@ -42,7 +42,12 @@ class Quiz extends React.Component {
       .doc(this.state.userID)
       .set(tempDict, { merge: true });
     
-    var newQno = this.state.currentQuestionNumber + 1;  
+    var newQno = this.state.currentQuestionNumber + 1;
+
+    if (newQno>10){
+      newQno = 1
+    }  
+
     this.setState({
       answer: '',
       currentQuestionNumber : newQno,
