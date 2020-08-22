@@ -7,6 +7,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+import players from '../data/players.json';
+
 class Predict extends React.Component {
   constructor(props) {
     super(props);
@@ -17,9 +19,6 @@ class Predict extends React.Component {
       confirmNumber: 0,
     };
   }
-
-  // Add all the names here TO BE DONE
-  players = ['MSD'];
 
   /* This function just closes the dialog */
   handleDialogClose = () => {
@@ -58,7 +57,7 @@ class Predict extends React.Component {
     console.log(number);
 
     if (!this.state.predictionArray.includes(number)) {
-      this.handleDialogOpen(this.players[0], number);
+      this.handleDialogOpen(players[number], number);
     } else {
       console.log('Already Predicted this one');
     }
@@ -74,7 +73,7 @@ class Predict extends React.Component {
         <Card
           key={i}
           img={imgSrc}
-          name={this.players[0]}
+          name={players[i]}
           status={status}
           handler={() => this.addPrediction(i)}
         />,
