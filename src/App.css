@@ -37,3 +37,14 @@ header {
 #prediction-gallery {
   margin-bottom: 50px;
 }
+
+.tabs {
+  margin-right: 2%;
+  margin-bottom: 2%;
+  margin-top: 2%;
+}
+
+#questions-tab {
+  margin-top: 15%;
+  margin-bottom: 15%;
+}
