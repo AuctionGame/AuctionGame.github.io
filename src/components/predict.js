@@ -9,6 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import players from '../data/players.json';
 
 class Predict extends React.Component {
   constructor(props) {
@@ -21,9 +22,6 @@ class Predict extends React.Component {
       loginId: 'teamId',
     };
   }
-
-  // Add all the names here TO BE DONE
-  players = ['MSD'];
 
   /* This function just closes the dialog */
   handleDialogClose = () => {
