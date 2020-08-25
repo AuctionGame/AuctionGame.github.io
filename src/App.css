@@ -44,10 +44,14 @@ header {
 
 #questions-tab {
   margin-top: 15%;
-  margin-bottom: 15%;
+  margin-bottom: 16px;
 }
 
 .simple-player-card {
   min-width: 200px;
   margin-top: 24px;
+}
+
+.input-gap {
+  margin: 12px 0;
 }
