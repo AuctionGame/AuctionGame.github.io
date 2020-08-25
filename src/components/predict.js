@@ -33,7 +33,47 @@ class Predict extends React.Component {
 
   loginSubmitHandler(val) {
     console.log("Login In prediction submit function", val);
+
+    const db = firebase.firestore()
+    db.collection('predictions').doc(val).get().then((doc) => {
+      if (doc.exists) {
+        // login successful
+        this.setState({
+          loginId : val
+        })
+
+          const db = firebase.firestore();
+          db.collection('predictions')
+            .doc(this.state.loginId)
+            .onSnapshot(
+              (snap) => {
+                const predictionData = snap.data();
+                console.log('Prediction data', predictionData);
+      
+                // Create the prediction array from the dictionary type of
+                // {0: pNo, 1: pNo, ....}
+                var predictionArray = [];
+                for (var key in predictionData) {
+                  predictionArray.push(predictionData[key]);
+                }
+      
+                this.setState({
+                  predictionArray: predictionArray,
+                });
+              },
+              (err) => {},
+            );
+        
+
+      }  else {
+        this.setState({
+          loginFail: true
+        });
+      } 
+  })
+
   }
+
 
   /* This function just closes the dialog */
   handleDialogClose = () => {
@@ -88,30 +128,6 @@ class Predict extends React.Component {
     }
   }
 
-  // Add this later to be done after the login
-  // componentDidMount() {
-  //   const db = firebase.firestore();
-  //   db.collection('predictions')
-  //     .doc(this.state.loginId)
-  //     .onSnapshot(
-  //       (snap) => {
-  //         const predictionData = snap.data();
-  //         console.log('Prediction data', predictionData);
-
-  //         // Create the prediction array from the dictionary type of
-  //         // {0: pNo, 1: pNo, ....}
-  //         var predictionArray = [];
-  //         for (var key in predictionData) {
-  //           predictionArray.push(predictionData[key]);
-  //         }
-
-  //         this.setState({
-  //           predictionArray: predictionArray,
-  //         });
-  //       },
-  //       (err) => {},
-  //     );
-  // }
 
   render() {
 
@@ -122,10 +138,10 @@ class Predict extends React.Component {
 
       // If they ahve predicted all
       if (predictionArray.length >= 7) {
-        // Change this to something better
+        // Change this to something better - TO BE DONE BY DEEEEPPPAAAALLLIIIII!
         const items = [];
         predictionArray.map((element) => {
-          items.push(element);
+          items.push(players[element]);
           return false;
         });
 
