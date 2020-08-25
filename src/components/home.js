@@ -7,6 +7,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import SimplePlayerCard from './SimplePlayerCard';
 
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+
 function MiddleBlock(props) {
   if(props.currentMain) {
     // Team 1 to 8
@@ -80,6 +83,19 @@ class Home extends React.Component {
     })
   }
 
+
+  componentDidMount() {
+    const db = firebase.firestore();
+
+    db.collection('team')
+    .onSnapshot(function(snap) {
+      
+      snap.forEach(function(doc) {
+        console.log("TEam data", doc.data());
+      });
+       
+    })
+  }
 
   render() {
     const round = this.props.round;

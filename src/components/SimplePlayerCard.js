@@ -20,12 +20,14 @@ export default function SimplePlayerCard(props) {
 
   const classes = useStyles();
   
+  const imgSrc = "cpng/" + props.value + ".jpg";
+
   return (
     <div className="col">
     <Card className="simple-player-card">
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Word of the Day
+          <img className="gallery-item" src={imgSrc} alt="Player" ></img>
         </Typography>
         <Typography variant="h5" component="h2">
           {players[props.value]}
