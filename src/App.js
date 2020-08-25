@@ -21,7 +21,7 @@ class App extends React.Component {
     // setting the inital state of the App
     this.state = {
       tabValue: 0,
-      round: '1',
+      round: 'quiz',
       messages: ['Hello message 1', 'hello message 2', 'Hello message 3']
     };
 
