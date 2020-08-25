@@ -19,6 +19,7 @@ class MyCard extends React.Component {
           <img className="card-img-top" src={img} alt={name} />
           <div className="card-body">
             <h5 className="card-title">{name}</h5>
+            <p>{this.props.type}</p>
             <button onClick={this.props.handler} className={`btn ${color}`}>
               {' '}
               {text}{' '}
