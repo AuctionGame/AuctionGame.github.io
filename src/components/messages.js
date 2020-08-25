@@ -19,10 +19,10 @@ class Messages extends React.Component {
 
   componentDidMount() {
     firebase.firestore().collection('admin')
-    .doc('messages').onSnapshot(
+    .doc('updates').onSnapshot(
       (snap) => {
         console.log("messages", snap.data());
-        this.updateMessages(snap.data()['messageArray']);
+        this.updateMessages(snap.data()['announcements']);
       },
       (error) => {
         console.log("Messages Error came", error);
