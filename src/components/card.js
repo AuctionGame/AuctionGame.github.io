@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Card extends React.Component {
+class MyCard extends React.Component {
   render() {
     const img = this.props.img;
     const name = this.props.name;
@@ -32,4 +32,4 @@ class Card extends React.Component {
   }
 }
 
-export default Card;
+export default MyCard;

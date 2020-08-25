@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from './card';
+import MyCard from './card';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -64,7 +64,7 @@ class Predict extends React.Component {
     console.log(number);
 
     if (!this.state.predictionArray.includes(number)) {
-      this.handleDialogOpen(this.players[0], number);
+      this.handleDialogOpen(players[0], number);
     } else {
       console.log('Already Predicted this one');
     }
@@ -114,10 +114,10 @@ class Predict extends React.Component {
         var imgSrc = 'cpng/' + i + '.jpg';
         var status = this.state.predictionArray.includes(i);
         items.push(
-          <Card
+          <MyCard
             key={i}
             img={imgSrc}
-            name={this.players[0]}
+            name={players[0]}
             status={status}
             handler={() => this.addPrediction(i)}
           />,
