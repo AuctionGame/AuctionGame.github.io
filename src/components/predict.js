@@ -1,5 +1,7 @@
 import React from 'react';
 import MyCard from './card';
+import LoginHandler from './LoginHandler';
+
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -9,6 +11,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+
 import players from '../data/players.json';
 
 class Predict extends React.Component {
@@ -19,14 +22,29 @@ class Predict extends React.Component {
       open: false,
       dialogName: 'Confirm',
       confirmNumber: 0,
-      loginId: 'teamId',
+      loginId: '',
+      loginFail: false
     };
+
+    this.handleFailDialogClose = this.handleFailDialogClose.bind(this);
+    this.loginSubmitHandler = this.loginSubmitHandler.bind(this);
+  }
+
+
+  loginSubmitHandler(val) {
+    console.log("Login In prediction submit function", val);
   }
 
   /* This function just closes the dialog */
   handleDialogClose = () => {
     this.setState({ open: false });
   };
+
+  handleFailDialogClose() {
+    this.setState({
+      loginFail: false
+    })
+  }
 
   /* This function handles the confirm prediciton dialog */
   handleDialogOpen = (title, number) => {
@@ -71,97 +89,137 @@ class Predict extends React.Component {
   }
 
   // Add this later to be done after the login
-  componentDidMount() {
-    const db = firebase.firestore();
-    db.collection('predictions')
-      .doc(this.state.loginId)
-      .onSnapshot(
-        (snap) => {
-          const predictionData = snap.data();
-          console.log('Prediction data', predictionData);
+  // componentDidMount() {
+  //   const db = firebase.firestore();
+  //   db.collection('predictions')
+  //     .doc(this.state.loginId)
+  //     .onSnapshot(
+  //       (snap) => {
+  //         const predictionData = snap.data();
+  //         console.log('Prediction data', predictionData);
 
-          // Create the prediction array from the dictionary type of
-          // {0: pNo, 1: pNo, ....}
-          var predictionArray = [];
-          for (var key in predictionData) {
-            predictionArray.push(predictionData[key]);
-          }
+  //         // Create the prediction array from the dictionary type of
+  //         // {0: pNo, 1: pNo, ....}
+  //         var predictionArray = [];
+  //         for (var key in predictionData) {
+  //           predictionArray.push(predictionData[key]);
+  //         }
 
-          this.setState({
-            predictionArray: predictionArray,
-          });
-        },
-        (err) => {},
-      );
-  }
+  //         this.setState({
+  //           predictionArray: predictionArray,
+  //         });
+  //       },
+  //       (err) => {},
+  //     );
+  // }
 
   render() {
-    const predictionArray = this.state.predictionArray;
 
-    // If they ahve predicted all
-    if (predictionArray.length >= 7) {
-      // Change this to something better
-      const items = [];
-      predictionArray.map((element) => {
-        items.push(element);
-      });
+    // First check if loggined
+    if (this.state.loginId) {
 
-      return <div id="done-all-predictions">{items}</div>;
-    } else {
-      // It's better to use map, however we are usign let for this
-      const items = [];
-      for (let i = 1; i <= 60; i++) {
-        var imgSrc = 'cpng/' + i + '.jpg';
-        var status = this.state.predictionArray.includes(i);
-        items.push(
-          <MyCard
-            key={i}
-            img={imgSrc}
-            name={players[0]}
-            status={status}
-            handler={() => this.addPrediction(i)}
-          />,
-        );
-      }
+      const predictionArray = this.state.predictionArray;
 
-      return (
-        <div id="prediction-gallery">
-          <h2 className="center">Make your predictions</h2>
-          <div className="container">
-            <div className="row">{items}</div>
+      // If they ahve predicted all
+      if (predictionArray.length >= 7) {
+        // Change this to something better
+        const items = [];
+        predictionArray.map((element) => {
+          items.push(element);
+          return false;
+        });
+
+        return <div id="done-all-predictions">{items}</div>;
+      } else {
+        // It's better to use map, however we are usign let for this
+        const items = [];
+        for (let i = 1; i <= 60; i++) {
+          var imgSrc = 'cpng/' + i + '.jpg';
+          var status = this.state.predictionArray.includes(i);
+          items.push(
+            <MyCard
+              key={i}
+              img={imgSrc}
+              name={players[i]}
+              status={status}
+              type="Bowler"
+              handler={() => this.addPrediction(i)}
+            />,
+          );
+        }
+
+        return (
+          <div id="prediction-gallery">
+            <h2 className="center">Make your predictions</h2>
+            <div className="container">
+              <div className="row">{items}</div>
+            </div>
+
+            {/* Here is the dialog box */}
+            <Dialog
+              open={this.state.open}
+              onClose={this.handleDialogClose}
+              aria-labelledby="Confirm Dialog"
+              aria-describedby="Alert dialog"
+            >
+              <DialogTitle id="alert-dialog-title">
+                {this.state.dialogName}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Are you sure you want to go with this?
+              </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleDialogClose} color="primary">
+                  No
+              </Button>
+                <Button
+                  onClick={this.handlePlayerConfirm}
+                  color="primary"
+                  autoFocus
+                >
+                  Yes
+              </Button>
+              </DialogActions>
+            </Dialog>
           </div>
+        );
+      } // End of all done else
+    } // End of login if
+    else {
+      return (
+        <div id="prediction-login">
+          <h1 className="center">Prediction Roud Login</h1>
+          <LoginHandler
+            submitHandler={this.loginSubmitHandler}
+          />
 
-          {/* Here is the dialog box */}
           <Dialog
-            open={this.state.open}
-            onClose={this.handleDialogClose}
-            aria-labelledby="Confirm Dialog"
-            aria-describedby="Alert dialog"
+            open={this.state.loginFail}
+            onClose={this.handleFailDialogClose}
+            aria-labelledby="Login Failed"
+            aria-describedby="Fail dialog"
           >
             <DialogTitle id="alert-dialog-title">
-              {this.state.dialogName}
+              Login Unsuccessful
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                Are you sure you want to go with this?
+                Please check you secret Id and try again!
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.handleDialogClose} color="primary">
-                No
-              </Button>
-              <Button
-                onClick={this.handlePlayerConfirm}
-                color="primary"
-                autoFocus
-              >
-                Yes
+              <Button onClick={this.handleFailDialogClose} color="primary">
+                close
               </Button>
             </DialogActions>
           </Dialog>
+
         </div>
-      );
-    } // End of all done else
+
+      )
+    }
   } // End of render
 }
 
