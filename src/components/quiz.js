@@ -7,7 +7,7 @@ class Quiz extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userID: 'RPtYx30BJ0EuTzPuMQhI',
+      userID: 'sTVm5NerQMaqUnWWxQoN',
       currentQuestionNumber: 1,
       currentQuestion: '',
       answer: '',
@@ -124,6 +124,7 @@ class Quiz extends React.Component {
         }
         return (
           <button
+            key={i}
             onClick={() => this.questionTab(i)}
             className={`btn tabs ${colorType}`}
           >
