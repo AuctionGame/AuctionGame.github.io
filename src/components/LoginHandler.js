@@ -16,7 +16,7 @@ class LoginHandler extends React.Component {
         console.log("From submit called");
         console.log("Value", this.state.inputValue);
         if (typeof this.props.submitHandler === 'function') {
-            this.props.submitHandler(this.state.inputValue);
+            this.props.submitHandler(this.state.inputValue.trim());
         }
     }
 
