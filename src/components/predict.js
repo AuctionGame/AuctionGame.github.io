@@ -23,50 +23,48 @@ class Predict extends React.Component {
       dialogName: 'Confirm',
       confirmNumber: 0,
       loginId: '',
-      loginFail: false
+      loginFail: false,
     };
 
     this.handleFailDialogClose = this.handleFailDialogClose.bind(this);
     this.loginSubmitHandler = this.loginSubmitHandler.bind(this);
   }
 
-
   loginSubmitHandler(val) {
-    console.log("Login In prediction submit function", val);
+    console.log('Login In prediction submit function', val);
 
-    const db = firebase.firestore()
-    db.collection('predictions').doc(val).get().then((doc) => {
-      if (doc.exists) {
-        // login successful
-        this.setState({
-          loginId: val
-        })
+    const db = firebase.firestore();
+    db.collection('predictions')
+      .doc(val)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          // login successful
+          this.setState({
+            loginId: val,
+          });
 
-        const db = firebase.firestore();
-        db.collection('predictions')
-          .doc(this.state.loginId)
-          .onSnapshot(
-            (snap) => {
-              const predictionData = snap.data()["predictionArray"];
-              console.log('Prediction data', predictionData);
+          const db = firebase.firestore();
+          db.collection('predictions')
+            .doc(this.state.loginId)
+            .onSnapshot(
+              (snap) => {
+                const predictionData = snap.data()['predictionArray'];
+                console.log('Prediction data', predictionData);
 
-              this.setState({
-                predictionArray: predictionData,
-              });
-            },
-            (err) => { },
-          );
-
-
-      } else {
-        this.setState({
-          loginFail: true
-        });
-      }
-    })
-
+                this.setState({
+                  predictionArray: predictionData,
+                });
+              },
+              (err) => {},
+            );
+        } else {
+          this.setState({
+            loginFail: true,
+          });
+        }
+      });
   }
-
 
   /* This function just closes the dialog */
   handleDialogClose = () => {
@@ -75,8 +73,8 @@ class Predict extends React.Component {
 
   handleFailDialogClose() {
     this.setState({
-      loginFail: false
-    })
+      loginFail: false,
+    });
   }
 
   /* This function handles the confirm prediciton dialog */
@@ -91,9 +89,8 @@ class Predict extends React.Component {
   handlePlayerConfirm = () => {
     const predictionArray = this.state.predictionArray;
 
-
-    var predictionArrayDict = {}
-    predictionArrayDict["predictionArray"] = predictionArray
+    var predictionArrayDict = {};
+    predictionArrayDict['predictionArray'] = predictionArray;
 
     // Update the firebase with this data
     // The prediction array will be automatically updated due to firesbase snapshot
@@ -113,38 +110,31 @@ class Predict extends React.Component {
   addPrediction(number) {
     console.log('Add Prediction called');
     console.log(number);
-    const predictionArray = this.state.predictionArray
+    const predictionArray = this.state.predictionArray;
 
     if (!this.state.predictionArray.includes(number)) {
       // this.handleDialogOpen(players[0], number);
 
-      predictionArray.push(number)
+      predictionArray.push(number);
 
       this.setState({
         predictionArray: predictionArray,
-      })
-
+      });
     } else {
-
       //unpredict part of button
-      const indexx = predictionArray.indexOf(number)
-      predictionArray.splice(indexx, 1)
-      console.log(indexx)
+      const indexx = predictionArray.indexOf(number);
+      predictionArray.splice(indexx, 1);
+      console.log(indexx);
 
       this.setState({
-
-        predictionArray: predictionArray
-
+        predictionArray: predictionArray,
       });
     }
   }
 
-
   render() {
-
     // First check if loggined
     if (this.state.loginId) {
-
       const predictionArray = this.state.predictionArray;
 
       // document.getElementById('submitBtn').disabled = false -----> write this in reachJS :p
@@ -166,19 +156,24 @@ class Predict extends React.Component {
         );
       }
 
-      var submitButton = <button disabled>Submit</button>
+      var submitButton = <button disabled>Submit</button>;
 
       if (this.state.predictionArray.length >= 7) {
-        submitButton = <button onClick = {this.handleDialogOpen} className = "btn btn-success">Submit</button>
+        submitButton = (
+          <button onClick={this.handleDialogOpen} className="btn btn-success">
+            Submit
+          </button>
+        );
       }
-
 
       return (
         <div id="prediction-gallery">
           <h2 className="center">Make your predictions</h2>
-            { submitButton }
-            <h6>This button will be enabled once you predict all 7 players. :)</h6>
-          
+          {submitButton}
+          <h6>
+            This button will be enabled once you predict all 7 players. :)
+          </h6>
+
           <div className="container">
             <div className="row">{items}</div>
           </div>
@@ -203,7 +198,6 @@ class Predict extends React.Component {
               </Button>
             </DialogActions>
           </Dialog>
-
         </div>
       );
     } // End of login if
@@ -211,9 +205,7 @@ class Predict extends React.Component {
       return (
         <div id="prediction-login">
           <h1 className="center">Prediction Roud Login</h1>
-          <LoginHandler
-            submitHandler={this.loginSubmitHandler}
-          />
+          <LoginHandler submitHandler={this.loginSubmitHandler} />
 
           <Dialog
             open={this.state.loginFail}
@@ -235,10 +227,8 @@ class Predict extends React.Component {
               </Button>
             </DialogActions>
           </Dialog>
-
         </div>
-
-      )
+      );
     }
   } // End of render
 }

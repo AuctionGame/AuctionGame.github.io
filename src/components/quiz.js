@@ -47,8 +47,8 @@ class Quiz extends React.Component {
 
   handleDialogClose() {
     this.setState({
-      loginFail: false
-    })
+      loginFail: false,
+    });
   }
 
   updateQuestion(value) {
@@ -73,7 +73,7 @@ class Quiz extends React.Component {
     db.collection('answers')
       .doc(this.state.userID)
       .set(tempDict, { merge: true });
-    
+
     var newQno = this.state.currentQuestionNumber + 1;
 
     if (newQno > 10) {
@@ -97,44 +97,42 @@ class Quiz extends React.Component {
   }
 
   loginSubmitHandler(val) {
-    console.log("Submit Hanlder called", val);
+    console.log('Submit Hanlder called', val);
 
     const db = firebase.firestore();
-    const answersRef = db.collection('answers')
-    .doc(val);
+    const answersRef = db.collection('answers').doc(val);
 
-    answersRef.get()
-    .then((docSnapshot) => {
-      if(docSnapshot.exists) {
+    answersRef
+      .get()
+      .then((docSnapshot) => {
+        if (docSnapshot.exists) {
+          // Doc exists so login successful
 
-        // Doc exists so login successful
+          // Now update the state
+          this.setState({
+            userID: val,
+          });
 
-        // Now update the state
-        this.setState({
-          userID: val
-        });
-
-        answersRef.onSnapshot(
-          (snap) => {
-            this.setState({
-              answerDict: snap.data(),
-            });
-          },
-          (err) => {
-            console.log(`Encountered error: ${err}`);
-          },
-        );
-
-      } else {
-        this.setState({
-          loginFail: true
-        });
-      }
-    }).catch(function(err){
-      alert("Network connection Error")
-    }) // End of answersRef get
+          answersRef.onSnapshot(
+            (snap) => {
+              this.setState({
+                answerDict: snap.data(),
+              });
+            },
+            (err) => {
+              console.log(`Encountered error: ${err}`);
+            },
+          );
+        } else {
+          this.setState({
+            loginFail: true,
+          });
+        }
+      })
+      .catch(function (err) {
+        alert('Network connection Error');
+      }); // End of answersRef get
   }
-
 
   componentDidMount() {
     const db = firebase.firestore();
@@ -161,13 +159,10 @@ class Quiz extends React.Component {
       });
   } // End of componentDidMount
 
-
   render() {
-
     // First chck if the ID is entered on not
 
-    if(this.state.userID) {
-
+    if (this.state.userID) {
       //  for the questions tabs
       const tabs = () => {
         var total = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -227,9 +222,7 @@ class Quiz extends React.Component {
       return (
         <div id="quiz-login">
           <h1 className="center">Quiz Round</h1>
-          <LoginHandler
-            submitHandler={this.loginSubmitHandler}
-          />
+          <LoginHandler submitHandler={this.loginSubmitHandler} />
 
           <Dialog
             open={this.state.loginFail}
@@ -251,12 +244,10 @@ class Quiz extends React.Component {
               </Button>
             </DialogActions>
           </Dialog>
-
         </div>
-      )
+      );
     }
   }
 }
-
 
 export default Quiz;
