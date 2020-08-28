@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
 import players from '../data/players.json';
+import adjective from '../data/adjective.json'
 
 const useStyles = makeStyles({
   title: {
@@ -35,7 +36,7 @@ export default function SimplePlayerCard(props) {
             {players[props.value]}
           </Typography>
           <Typography className={classes.pos} color="textSecondary">
-            adjective
+            {adjective[props.value]}
           </Typography>
         </CardContent>
       </Card>
