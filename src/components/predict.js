@@ -183,34 +183,27 @@ class Predict extends React.Component {
             <div className="row">{items}</div>
           </div>
 
-          {/* Here is the dialog box */}
           <Dialog
-            open={this.state.open}
-            onClose={this.handleDialogClose}
-            aria-labelledby="Confirm Dialog"
-            aria-describedby="Alert dialog"
+            open={this.state.loginFail}
+            onClose={this.handleFailDialogClose}
+            aria-labelledby="Login Failed"
+            aria-describedby="Fail dialog"
           >
             <DialogTitle id="alert-dialog-title">
-              {this.state.dialogName}
+              Login Unsuccessful
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                Are you sure you want to go with this?
+                Please check you secret Id and try again!
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.handleDialogClose} color="primary">
-                No
-              </Button>
-              <Button
-                onClick={this.handlePlayerConfirm}
-                color="primary"
-                autoFocus
-              >
-                Yes
+              <Button onClick={this.handleFailDialogClose} color="primary">
+                close
               </Button>
             </DialogActions>
           </Dialog>
+
         </div>
       );
     } // End of login if
