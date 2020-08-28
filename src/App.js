@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import firebase from 'firebase/app';
-import 'firebase/firestore'
+import 'firebase/firestore';
 
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -12,6 +12,7 @@ import Home from './components/home';
 import Player from './components/players';
 import Teams from './components/teams';
 import Quiz from './components/quiz';
+import Messages from './components/messages';
 
 class App extends React.Component {
   constructor() {
@@ -20,7 +21,8 @@ class App extends React.Component {
     // setting the inital state of the App
     this.state = {
       tabValue: 0,
-      round: '...',
+      round: 'prediction',
+      messages: ['Hello message 1', 'hello message 2', 'Hello message 3']
     };
 
     // Don't forget to bind the functions to classes
@@ -50,7 +52,7 @@ class App extends React.Component {
     doc.onSnapshot(
       (snap) => {
         console.log('Recieved Round Info', snap.data().pid);
-        this.updateRound(snap.data().pid);
+        // this.updateRound(snap.data().pid);
       },
       (err) => {
         console.log(`Encountered error: ${err}`);
@@ -66,7 +68,18 @@ class App extends React.Component {
     if (round === '...') {
       return <h1 id="loading">Loading ...</h1>;
     } else if (round === 'quiz') {
-      return <Quiz />;
+      return (
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-sm-8">
+              <Quiz />
+            </div>
+            <div className="col-sm-4">
+              <Messages />
+            </div>
+          </div>
+        </div>
+      ) ;
     } else {
       // The main content and routes everything
       return (
@@ -93,7 +106,16 @@ class App extends React.Component {
                 <Teams />
               </Route>
               <Route path="/">
-                <Home round={this.state.round} />
+              <div className="container-fluid">
+                <div className="row">
+                  <div className="col-sm-8">
+                    <Home round={this.state.round} />
+                  </div>
+                  <div className="col-sm-4">
+                    <Messages />
+                  </div>
+                </div>
+              </div>
               </Route>
             </Switch>
           </div>

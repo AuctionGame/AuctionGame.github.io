@@ -19,8 +19,6 @@ header {
 
 #main-content {
   flex: 1 1 auto;
-  color: rgba(24, 180, 241, 0.815);
-  background: rgba(0, 255, 255, 0.753);
   overflow: auto;
 }
 
@@ -46,5 +44,14 @@ header {
 
 #questions-tab {
   margin-top: 15%;
-  margin-bottom: 15%;
+  margin-bottom: 16px;
+}
+
+.simple-player-card {
+  min-width: 200px;
+  margin-top: 24px;
+}
+
+.input-gap {
+  margin: 12px 0;
 }

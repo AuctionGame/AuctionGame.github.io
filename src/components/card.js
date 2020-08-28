@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Card extends React.Component {
+class MyCard extends React.Component {
   render() {
     const img = this.props.img;
     const name = this.props.name;
@@ -9,8 +9,8 @@ class Card extends React.Component {
     var color = 'btn-primary';
     var text = 'Predict';
     if (status) {
-      color = 'btn-success';
-      text = 'Predicted';
+      color = 'btn-outline-danger';
+      text = 'Unpredict';
     }
 
     return (
@@ -19,6 +19,7 @@ class Card extends React.Component {
           <img className="card-img-top" src={img} alt={name} />
           <div className="card-body">
             <h5 className="card-title">{name}</h5>
+            <p>{this.props.type}</p>
             <button onClick={this.props.handler} className={`btn ${color}`}>
               {' '}
               {text}{' '}
@@ -32,4 +33,4 @@ class Card extends React.Component {
   }
 }
 
-export default Card;
+export default MyCard;
