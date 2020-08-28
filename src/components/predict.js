@@ -24,10 +24,13 @@ class Predict extends React.Component {
       confirmNumber: 0,
       loginId: '',
       loginFail: false,
+      loginFailHeading: 'Login Unsuccessful',
+      loginFailDesc: 'Please check you secret Id and try again!',
     };
 
     this.handleFailDialogClose = this.handleFailDialogClose.bind(this);
     this.loginSubmitHandler = this.loginSubmitHandler.bind(this);
+    this.handleDialogOpen = this.handleDialogOpen.bind(this);
   }
 
   loginSubmitHandler(val) {
@@ -79,6 +82,7 @@ class Predict extends React.Component {
 
   /* This function handles the confirm prediciton dialog */
   handleDialogOpen = () => {
+    console.log('Handle submit');
     this.setState({
       dialogName: "You're about to submit",
       open: true,
@@ -112,14 +116,27 @@ class Predict extends React.Component {
     console.log(number);
     const predictionArray = this.state.predictionArray;
 
+    // Already exists or not
     if (!this.state.predictionArray.includes(number)) {
       // this.handleDialogOpen(players[0], number);
 
-      predictionArray.push(number);
+      // Check if 7 are done, show the warning that he has chose all 7 and he has to unpredict one
+      if (this.state.predictionArray.length >= 7) {
+        // Limit of 7 exceeded
+        // Using the same login fail warning dialog
+        this.setState({
+          loginFail: true,
+          loginFailHeading: 'Limit Exceed 7 Players!',
+          loginFailDesc: 'Please unpredict one or more to predict this one',
+        });
+      } else {
+        // Proceed as limit not exceeded yet
+        predictionArray.push(number);
 
-      this.setState({
-        predictionArray: predictionArray,
-      });
+        this.setState({
+          predictionArray: predictionArray,
+        });
+      }
     } else {
       //unpredict part of button
       const indexx = predictionArray.indexOf(number);
@@ -133,10 +150,36 @@ class Predict extends React.Component {
   }
 
   render() {
+    // Messages Dialog
+    const loginMessageDialog = (
+      <Dialog
+        open={this.state.loginFail}
+        onClose={this.handleFailDialogClose}
+        aria-labelledby="Login Failed"
+        aria-describedby="Fail dialog"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {this.state.loginFailHeading}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {this.state.loginFailDesc}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={this.handleFailDialogClose}
+            color="primary"
+            autoFocus
+          >
+            close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+
     // First check if loggined
     if (this.state.loginId) {
-      const predictionArray = this.state.predictionArray;
-
       // document.getElementById('submitBtn').disabled = false -----> write this in reachJS :p
 
       // It's better to use map, however we are usign let for this
@@ -156,7 +199,7 @@ class Predict extends React.Component {
         );
       }
 
-      var submitButton = <button disabled>Submit</button>;
+      var submitButton = <Button disabled>Submit</Button>;
 
       if (this.state.predictionArray.length >= 7) {
         submitButton = (
@@ -168,36 +211,49 @@ class Predict extends React.Component {
 
       return (
         <div id="prediction-gallery">
-          <h2 className="center">Make your predictions</h2>
-          {submitButton}
-          <h6>
-            This button will be enabled once you predict all 7 players. :)
-          </h6>
-
           <div className="container">
-            <div className="row">{items}</div>
+            <h2 className="center">Make your predictions</h2>
+            <div style={{ display: 'flex' }}>
+              {submitButton}
+              <div style={{ padding: '6px' }}>
+                This button will be enabled once you predict all 7 players. :)
+              </div>
+            </div>
+            <div id="prediction-gallery-row" className="row">
+              {items}
+            </div>
           </div>
 
           <Dialog
-            open={this.state.loginFail}
-            onClose={this.handleFailDialogClose}
+            open={this.state.open}
+            onClose={this.handleDialogClose}
             aria-labelledby="Login Failed"
             aria-describedby="Fail dialog"
           >
             <DialogTitle id="alert-dialog-title">
-              Login Unsuccessful
+              {this.state.dialogName}
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                Please check you secret Id and try again!
+                Submit Your Predictions!
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.handleFailDialogClose} color="primary">
-                close
+              <Button onClick={this.handleDialogClose} color="primary">
+                No
+              </Button>
+              <Button
+                onClick={this.handlePlayerConfirm}
+                color="primary"
+                autoFocus
+              >
+                Yes
               </Button>
             </DialogActions>
           </Dialog>
+
+          {/* Using this message dialog for other works also */}
+          {loginMessageDialog}
         </div>
       );
     } // End of login if
@@ -207,26 +263,7 @@ class Predict extends React.Component {
           <h1 className="center">Prediction Roud Login</h1>
           <LoginHandler submitHandler={this.loginSubmitHandler} />
 
-          <Dialog
-            open={this.state.loginFail}
-            onClose={this.handleFailDialogClose}
-            aria-labelledby="Login Failed"
-            aria-describedby="Fail dialog"
-          >
-            <DialogTitle id="alert-dialog-title">
-              Login Unsuccessful
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Please check you secret Id and try again!
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={this.handleFailDialogClose} color="primary">
-                close
-              </Button>
-            </DialogActions>
-          </Dialog>
+          {loginMessageDialog}
         </div>
       );
     }
