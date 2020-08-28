@@ -22,7 +22,7 @@ class App extends React.Component {
     this.state = {
       tabValue: 0,
       round: 'prediction',
-      messages: ['Hello message 1', 'hello message 2', 'Hello message 3']
+      messages: ['Hello message 1', 'hello message 2', 'Hello message 3'],
     };
 
     // Don't forget to bind the functions to classes
@@ -79,7 +79,7 @@ class App extends React.Component {
             </div>
           </div>
         </div>
-      ) ;
+      );
     } else {
       // The main content and routes everything
       return (
@@ -106,16 +106,16 @@ class App extends React.Component {
                 <Teams />
               </Route>
               <Route path="/">
-              <div className="container-fluid">
-                <div className="row">
-                  <div className="col-sm-8">
-                    <Home round={this.state.round} />
-                  </div>
-                  <div className="col-sm-4">
-                    <Messages />
+                <div className="container-fluid">
+                  <div className="row">
+                    <div className="col-sm-8">
+                      <Home round={this.state.round} />
+                    </div>
+                    <div className="col-sm-4">
+                      <Messages />
+                    </div>
                   </div>
                 </div>
-              </div>
               </Route>
             </Switch>
           </div>

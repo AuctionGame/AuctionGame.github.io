@@ -9,8 +9,8 @@ class MyCard extends React.Component {
     var color = 'btn-primary';
     var text = 'Predict';
     if (status) {
-      color = 'btn-success';
-      text = 'Predicted';
+      color = 'btn-outline-danger';
+      text = 'Unpredict';
     }
 
     return (
