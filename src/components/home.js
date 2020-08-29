@@ -14,19 +14,36 @@ function MiddleBlock(props) {
   if (props.currentMain) {
     // Team 1 to 8
 
+    // This current has been changed to dictionary
     var current = props.teams[props.currentMain];
 
     var cardsElementList = [];
-    current.map((element, index) => {
-      console.log(element);
-      cardsElementList.push(<SimplePlayerCard value={element} />);
-      return false;
-    });
+    // current.map((element, index) => {
+    //   console.log(element);
+    //   cardsElementList.push(<SimplePlayerCard value={element} />);
+    //   return false;
+    // });
+
+    for (var key in current) {
+      console.log("Creating middle block", key, current[key]);
+      cardsElementList.push(<SimplePlayerCard value={key} price={current[key]} />);
+    }
 
     return <div className="row">{cardsElementList}</div>;
   } else {
     // Above Auction One
-    return `Current Auction going for ${props.round} `;
+
+    if (props.currentMain === 'unsold') {
+      return 'UNSOLD ONE'
+    } else {
+
+      // This is the curretn Auction status
+      // return `Current Auction going for ${props.round} `;
+      return (
+        <SimplePlayerCard value={props.round} />
+      )
+    }
+    
   }
 }
 
@@ -72,12 +89,17 @@ class Home extends React.Component {
   componentDidMount() {
     const db = firebase.firestore();
 
-    db.collection('team_players').onSnapshot(function (snap) {
+    db.collection('team_players').onSnapshot((snap) => {
       var empty_dict = {}
       snap.forEach(doc => {
 
-        empty_dict[doc.id] = doc.data()
+        empty_dict[doc.id] = doc.data();
 
+      });
+
+      // Empty dict created with all the values
+      this.setState({
+        teams: empty_dict
       });
 
     });

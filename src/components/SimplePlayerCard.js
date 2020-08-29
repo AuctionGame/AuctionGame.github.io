@@ -21,6 +21,11 @@ export default function SimplePlayerCard(props) {
 
   const imgSrc = 'cpng/' + props.value + '.jpg';
 
+  var priceSection = 'Unsold';
+  if (props.price) {
+    priceSection = <p>Rs. {props.price}</p>
+  }
+
   return (
     <div className="col">
       <Card className="simple-player-card">
@@ -38,6 +43,7 @@ export default function SimplePlayerCard(props) {
           <Typography className={classes.pos} color="textSecondary">
             {adjective[props.value]}
           </Typography>
+          {priceSection}
         </CardContent>
       </Card>
     </div>
