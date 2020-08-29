@@ -65,3 +65,11 @@ header {
 .input-gap {
   margin: 12px 0;
 }
+
+.not-sold-player {
+  opacity: 1;
+}
+
+.sold-player {
+  opacity: 0.5;
+}

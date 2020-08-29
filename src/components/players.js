@@ -5,37 +5,45 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 
 class Player extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      unsoldArray: []
-    }
+      soldDict: {},
+    };
   }
 
   componentDidMount() {
     // Here we will extract the data from firebase
     const db = firebase.firestore();
 
-    db.collection('team_players').doc('unsold')
-    .onSnapshot((doc) => {
-      
-      var unsold_array = doc.data()['playerArray'];
+    db.collection('team_players')
+      .onSnapshot(
+        (snap) => {
+          var soldDict = {}
+          snap.forEach(doc => {
+            const data = doc.data();
+            for(var key in data) {
+              soldDict[key] = data[key]
+            }
+          });
 
-      // Now store the data
-      this.setState({
-        unsoldArray : unsold_array
-      });
-
-
-    }, (err) => {
-      console.log("Fetch Failed");
-    })
+          // Finally update the ones who are sold 
+          this.setState({
+            soldDict : soldDict
+          });
+        },
+        (err) => {
+          console.log('Fetch Failed');
+        },
+      );
   }
 
-  render () {
+  render() {
+    const soldDict = this.state.soldDict;
+
     const elementArr = [];
     for (let i = 1; i <= 60; i++) {
-      elementArr.push(<SimplePlayerCard key={i} value={i} />);
+      elementArr.push(<SimplePlayerCard key={i} value={i} sold={true} price={soldDict[i]} />);
     }
 
     return (
@@ -43,12 +51,7 @@ class Player extends React.Component {
         <div className="row">{elementArr}</div>
       </div>
     );
-
   }
- 
-
-
-  
 }
 
 export default Player;

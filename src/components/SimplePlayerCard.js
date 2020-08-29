@@ -21,13 +21,17 @@ export default function SimplePlayerCard(props) {
 
   const imgSrc = 'cpng/' + props.value + '.jpg';
 
-  var priceSection = 'Unsold';
+  var priceSection = '';
+  var bought = 'col not-sold-player';
   if (props.price) {
-    priceSection = <p>Rs. {props.price}</p>
+    priceSection = <p>Sold Rs. {props.price}</p>
+    if (props.sold) {
+      bought = 'col sold-player';
+    }
   }
 
   return (
-    <div className="col">
+    <div className={bought}>
       <Card className="simple-player-card">
         <CardContent>
           <Typography
