@@ -72,10 +72,14 @@ class Home extends React.Component {
   componentDidMount() {
     const db = firebase.firestore();
 
-    db.collection('team').onSnapshot(function (snap) {
-      snap.forEach(function (doc) {
-        console.log('TEam data', doc.data());
+    db.collection('team_players').onSnapshot(function (snap) {
+      var empty_dict = {}
+      snap.forEach(doc => {
+
+        empty_dict[doc.id] = doc.data()
+
       });
+
     });
   }
 

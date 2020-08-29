@@ -235,7 +235,7 @@ class Predict extends React.Component {
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                Submit Your Predictions!
+                Are you sure you want to go ahead with this?
               </DialogContentText>
             </DialogContent>
             <DialogActions>
