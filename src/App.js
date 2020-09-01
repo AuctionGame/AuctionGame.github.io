@@ -13,6 +13,7 @@ import Player from './components/players';
 import Teams from './components/teams';
 import Quiz from './components/quiz';
 import Messages from './components/messages';
+import QuizWaiting from './components/QuizWaiting';
 
 class App extends React.Component {
   constructor() {
@@ -21,7 +22,7 @@ class App extends React.Component {
     // setting the inital state of the App
     this.state = {
       tabValue: 0,
-      round: '...',
+      round: 'prediction',
       messages: ['Hello message 1', 'hello message 2', 'Hello message 3'],
     };
 
@@ -52,7 +53,7 @@ class App extends React.Component {
     doc.onSnapshot(
       (snap) => {
         console.log('Recieved Round Info', snap.data().pid);
-        this.updateRound(snap.data().pid);
+        // this.updateRound(snap.data().pid);
       },
       (err) => {
         console.log(`Encountered error: ${err}`);
@@ -73,6 +74,19 @@ class App extends React.Component {
           <div className="row">
             <div className="col-sm-8">
               <Quiz />
+            </div>
+            <div className="col-sm-4">
+              <Messages />
+            </div>
+          </div>
+        </div>
+      );
+    } else if (round === 'waiting') {
+      return (
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-sm-8">
+              <QuizWaiting />
             </div>
             <div className="col-sm-4">
               <Messages />
