@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import SimplePlayerCard from './SimplePlayerCard';
 
 import firebase from 'firebase/app';
@@ -16,26 +16,25 @@ class Player extends React.Component {
     // Here we will extract the data from firebase
     const db = firebase.firestore();
 
-    db.collection('team_players')
-      .onSnapshot(
-        (snap) => {
-          var soldDict = {}
-          snap.forEach(doc => {
-            const data = doc.data();
-            for(var key in data) {
-              soldDict[key] = data[key]
-            }
-          });
+    db.collection('team_players').onSnapshot(
+      (snap) => {
+        var soldDict = {};
+        snap.forEach((doc) => {
+          const data = doc.data();
+          for (var key in data) {
+            soldDict[key] = data[key];
+          }
+        });
 
-          // Finally update the ones who are sold 
-          this.setState({
-            soldDict : soldDict
-          });
-        },
-        (err) => {
-          console.log('Fetch Failed');
-        },
-      );
+        // Finally update the ones who are sold
+        this.setState({
+          soldDict: soldDict,
+        });
+      },
+      (err) => {
+        console.log('Fetch Failed');
+      },
+    );
   }
 
   render() {
@@ -43,7 +42,9 @@ class Player extends React.Component {
 
     const elementArr = [];
     for (let i = 1; i <= 60; i++) {
-      elementArr.push(<SimplePlayerCard key={i} value={i} sold={true} price={soldDict[i]} />);
+      elementArr.push(
+        <SimplePlayerCard key={i} value={i} sold={true} price={soldDict[i]} />,
+      );
     }
 
     return (
