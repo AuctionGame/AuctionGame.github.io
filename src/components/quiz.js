@@ -24,6 +24,7 @@ class Quiz extends React.Component {
       currentQuestion: '',
       answer: '',
       questions: {},
+      maxMarksPerQuestion: {},
       answerDict: {
         1: '',
         2: '',
@@ -154,9 +155,27 @@ class Quiz extends React.Component {
           console.log('No such document!');
         }
       })
-      .catch(function (error) {
+      .catch( (error) => {
         console.log('Error getting document:', error);
       });
+
+    // Here we will also fetch the marks
+    db.collection('questions').doc('marks')
+      .get()
+      .then( (doc) => {
+        if(doc.exists) {
+          console.log("Marks", doc.data());
+          this.setState({
+            maxMarksPerQuestion: doc.data()
+          });
+
+        } else {
+          console.log("No such doc exists");
+        }
+      })
+      .catch( (error) => {
+        console.log("Question marks fetch error", error);
+      })
   } // End of componentDidMount
 
   render() {
@@ -183,6 +202,8 @@ class Quiz extends React.Component {
         });
       };
 
+      const marksOfThisQuestion = this.state.maxMarksPerQuestion[this.state.currentQuestionNumber];
+
       return (
         <div>
           <h1 className="center">Quiz Round</h1>
@@ -191,7 +212,7 @@ class Quiz extends React.Component {
               <h3 className="display-4">
                 Question {this.state.currentQuestionNumber}
               </h3>
-              <p className="lead">{this.state.currentQuestion}</p>
+              <p className="lead">{this.state.currentQuestion} [{marksOfThisQuestion}]</p>
               <hr className="my-4" />
               <form onSubmit={this.handleSubmit}>
                 <div className="input-gap">
