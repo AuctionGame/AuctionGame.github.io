@@ -38,7 +38,7 @@ class Teams extends React.Component {
     // Here we will extract the data from firebase
     const db = firebase.firestore();
 
-    db.collection('selectedTeams')
+    db.collection('registeredTeams') //change this back to selected teams :p
       .onSnapshot(
         (snap) => {
           var Dict = {}
@@ -71,13 +71,11 @@ class Teams extends React.Component {
       teamLeaders.push(teamDetails[key]["teamLeader"]);      
     }
 
-    for (let i=0 ; i<2 ; i++) {
+    for (var key in teamDetails) {
 
-      allTeamsComponent.push(<TeamCard teamName={teamNames[i]} teamMember={teamMembers[i]} teamLeader={teamLeaders[i]} />)
+      allTeamsComponent.push(<TeamCard teamName={teamNames[key-1]} teamMember={teamMembers[key-1]} teamLeader={teamLeaders[key-1]} />)
 
     }
-
-
 
 
 
