@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 
 import players from '../data/players.json';
 import adjective from '../data/adjective.json';
+import bidprice from '../data/bidprice.json';
 
 const useStyles = makeStyles({
   title: {
@@ -30,6 +31,11 @@ export default function SimplePlayerCard(props) {
     }
   }
 
+  let bidPrice = '';
+  if (props.toShowBidPrice) {
+  bidPrice = <p>Starting Bid Rs. {bidprice[props.value]}</p>
+  }
+
   return (
     <div className={bought}>
       <Card className="simple-player-card">
@@ -47,6 +53,7 @@ export default function SimplePlayerCard(props) {
           <Typography className={classes.pos} color="textSecondary">
             {adjective[props.value]}
           </Typography>
+          {bidPrice}
           {priceSection}
         </CardContent>
       </Card>

@@ -40,7 +40,7 @@ function MiddleBlock(props) {
     } else {
       // This is the curretn Auction status
       // return `Current Auction going for ${props.round} `;
-      return <SimplePlayerCard value={props.round} />;
+      return <SimplePlayerCard value={props.round} toShowBidPrice={true} />;
     }
   }
 }
