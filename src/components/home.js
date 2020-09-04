@@ -47,7 +47,34 @@ function MiddleBlock(props) {
     } else {
       // This is the curretn Auction status
       // return `Current Auction going for ${props.round} `;
-      return <SimplePlayerCard colSize="6" highQuality={true} value={props.round} toShowBidPrice={true} />;
+
+      const predictedByList = [];
+      try {
+
+        props.predictedByList.forEach(data => {
+          predictedByList.push(
+            <li style={{ marginLeft: "24px" }}>{data}</li>
+          )
+        });
+      } catch(err) {
+        // Here error will come when it is prediccted by none
+        // i.e predictedByList is empty
+        predictedByList.push(<p className="center"> No Team</p>)
+      }
+
+      return (
+        <div className="row">
+          <SimplePlayerCard colSize="4" highQuality={true} value={props.round} toShowBidPrice={true} />
+          <div className="col-sm-8">
+            <div id="predicted-by-list" style={{margin: "8px"}}>
+              <h3 className="center" style={{ margin: "20px 0 8px 0" }}>Predicted by</h3>
+              
+                {predictedByList}
+              
+            </div>
+          </div>
+        </div>
+      )
     }
   }
 }
@@ -106,9 +133,9 @@ class Home extends React.Component {
         8: 800
       },
       predictionDict: {
-        1: [1, 2],
+        1: [],
         2: [],
-        3: [2, 6]
+        3: []
       }
     };
   }
@@ -157,16 +184,16 @@ class Home extends React.Component {
         db.collection('predictions').get()
           .then((snap) => {
             let predictedTeams = {}
-            
+
             snap.forEach(doc => {
 
               const predictionArray = doc.data()['predictionArray']
               for (let i = 0; i < predictionArray.length; i++) {
-                if (predictedTeams[predictionArray[i]]){
-                  predictedTeams[predictionArray[i]].push(teamCodesDict[doc.id])
+                if (predictedTeams[predictionArray[i]]) {
+                  predictedTeams[predictionArray[i]].push(teamNamesDict[teamCodesDict[doc.id]])
                 }
-                else{
-                  predictedTeams[predictionArray[i]] = [teamCodesDict[doc.id]]
+                else {
+                  predictedTeams[predictionArray[i]] = [teamNamesDict[teamCodesDict[doc.id]]]
                 }
               }
 
@@ -240,6 +267,7 @@ class Home extends React.Component {
                 currentMain={currentMain}
                 teams={this.state.teams}
                 round={this.props.round}
+                predictedByList={this.state.predictionDict[this.props.round]}
               />
             </div>
           </div>
