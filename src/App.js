@@ -23,7 +23,7 @@ class App extends React.Component {
     // setting the inital state of the App
     this.state = {
       tabValue: 0,
-      round: 'prediction',
+      round: '...',
       messages: ['Hello message 1', 'hello message 2', 'Hello message 3'],
     };
 
@@ -119,7 +119,7 @@ class App extends React.Component {
                 <Player />
               </Route>
               <Route path="/teams">
-                <Teams />
+                <Teams round={this.state.round}/>
               </Route>
               <Route path="/quiz-scores">
                 <QuizResult />
