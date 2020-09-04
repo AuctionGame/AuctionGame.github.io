@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 // import * as firebase from 'firebase';
 import Predict from './predict';
+import "../css/home.css"
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -31,7 +32,13 @@ function MiddleBlock(props) {
       );
     }
 
-    return <div className="row">{cardsElementList}</div>;
+    return (
+      <Fragment>
+      <h5 className="center" style={{ margin :"12px" }}>Money left with this team : {props.moneyLeft} </h5>
+    <div className="row">{cardsElementList}</div>
+    </Fragment>
+
+    )
   } else {
     // Above Auction One
 
@@ -138,7 +145,7 @@ class Home extends React.Component {
         console.log("Team Name Fetch failed");
       });
 
-    // A snapshot for meny left
+    // A snapshot for money left
     db.collection('selectedTeams')
       .onSnapshot((snap) => {
 
@@ -151,8 +158,10 @@ class Home extends React.Component {
           moneyLeft: moneyLeftDict
         });
 
+        console.log(this.state.moneyLeft)
+
       }, (error) => {
-        console.log("Meny left snapshot failed", error);
+        console.log("Money left snapshot failed", error);
       });
 
   }
@@ -187,6 +196,7 @@ class Home extends React.Component {
             </div>
             <div className="col-sm-9">
               <MiddleBlock
+                moneyLeft = {this.state.moneyLeft[currentMain]}
                 currentMain={currentMain}
                 teams={this.state.teams}
                 round={this.props.round}
