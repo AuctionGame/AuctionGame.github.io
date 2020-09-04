@@ -43,7 +43,7 @@ class Player extends React.Component {
     const elementArr = [];
     for (let i = 1; i <= 60; i++) {
       elementArr.push(
-        <SimplePlayerCard key={i} value={i} sold={true} price={soldDict[i]} />,
+        <SimplePlayerCard key={i} value={i} sold={true} price={soldDict[i]} colSize="3" />,
       );
     }
 

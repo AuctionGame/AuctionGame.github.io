@@ -20,14 +20,31 @@ const useStyles = makeStyles({
 export default function SimplePlayerCard(props) {
   const classes = useStyles();
 
-  const imgSrc = 'cpng/' + props.value + '.jpg';
+  /**
+   * value
+   * highQuality
+   * colSize
+   * price
+   * sold
+   * toShowBidPrice
+   */
+
+  let imgSrc = 'cpng/' + props.value + '.jpg';
+  if(props.highQuality) {
+    imgSrc = 'images/png/' + props.value + '.png';
+  }
+
+  let colToUse = 4; // Numric value
+  if (props.colSize) {
+    colToUse = props.colSize;
+  }
 
   var priceSection = '';
-  var bought = 'col-sm-4 not-sold-player';
+  var bought = 'col-sm-'+ colToUse +' not-sold-player';
   if (props.price) {
     priceSection = <p>Sold Rs. {props.price}</p>;
     if (props.sold) {
-      bought = 'col-sm-4 sold-player';
+      bought = 'col-sm-'+ colToUse +' sold-player';
     }
   }
 
