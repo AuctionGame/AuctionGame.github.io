@@ -23,7 +23,7 @@ class App extends React.Component {
     // setting the inital state of the App
     this.state = {
       tabValue: 0,
-      round: '...',
+      round: 13,
       messages: ['Hello message 1', 'hello message 2', 'Hello message 3'],
     };
 
