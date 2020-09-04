@@ -32,7 +32,7 @@ function TeamCard(props) {
 
         <div key={i} className="predictionList col-sm-1">
           
-          <div class="card" style={{ width: "6rem" }}>
+          <div class="card" style={{ width: "8rem", height: "95%" }}>
             <img src={imgSrc} class="card-img-top" />
             <div class="card-body">
               <p class="card-text">{playerName[props.prediction_arr.predictionArray[i]]}</p>
@@ -48,10 +48,10 @@ function TeamCard(props) {
 
   return (
     <Fragment>
-      <p className = "titleOfpredict">Predicted Players</p>
+      <h4 className = "titleOfpredict">Predicted Players</h4>
       <div className="row">
         <div className="col-sm-3">
-            <div className="card" style={{ width: '18rem' }}>
+            <div className="card" style={{ width: '90%' }}>
               <div className="card-body">
                 <h5 className="teamNames">Team Name - {props.teamName}</h5>
                 <h6 className="teamLeaders mb-2 text-muted">
