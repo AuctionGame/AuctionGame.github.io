@@ -260,7 +260,7 @@ class Predict extends React.Component {
     else {
       return (
         <div id="prediction-login">
-          <h1 className="center">Prediction Roud Login</h1>
+          <h1 className="center" style={{ margin: "12px"}}>Prediction Round Login</h1>
           <LoginHandler submitHandler={this.loginSubmitHandler} />
 
           {loginMessageDialog}

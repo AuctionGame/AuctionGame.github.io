@@ -14,6 +14,7 @@ import Teams from './components/teams';
 import Quiz from './components/quiz';
 import Messages from './components/messages';
 import QuizWaiting from './components/QuizWaiting';
+import QuizResult from './components/QuizResult';
 
 class App extends React.Component {
   constructor() {
@@ -108,6 +109,7 @@ class App extends React.Component {
               <Tab label="Home" to="/" component={Link} />
               <Tab label="Players" to="/players" component={Link} />
               <Tab label="Teams" to="/teams" component={Link} />
+              <Tab label="Quiz" to="/quiz-scores" component={Link} ></Tab>
             </Tabs>
           </AppBar>
 
@@ -118,6 +120,9 @@ class App extends React.Component {
               </Route>
               <Route path="/teams">
                 <Teams round={this.state.round}/>
+              </Route>
+              <Route path="/quiz-scores">
+                <QuizResult />
               </Route>
               <Route path="/">
                 <div className="container-fluid">
