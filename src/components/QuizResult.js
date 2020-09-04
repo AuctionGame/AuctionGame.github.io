@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+
 
 
 export default class QuizResult extends React.Component {
@@ -8,9 +9,7 @@ export default class QuizResult extends React.Component {
         super(props)
         this.state = {
             scorecard: {
-                1: 40,
-                2: 35,
-                3: 10
+               
             }
         }
     }
@@ -26,36 +25,45 @@ export default class QuizResult extends React.Component {
                         tempDict[doc.id] = doc.data().total
                     }
                 )
+                var items = Object.keys(tempDict).map(function (key) {
+                    return [key, tempDict[key]];
+                });
+
+                // Sort the array based on the second element
+                items.sort(function (first, second) {
+                    return second[1] - first[1];
+                });         
                 this.setState ({
-                    scorecard: tempDict
+                    scorecard: items
                 })
             }
         )
 
     }
 
-
-
-
     render() {
         const scorecard = this.state.scorecard
         const tableToCreate = []
-        for (var key in scorecard) {
+        for (let i = 0;i<scorecard.length;i++){
             tableToCreate.push(
+                <Fragment key = {i}>
                 <tr>
-                    <td>Team {key}</td>
-                    <td>{scorecard[key]}</td>
+                    <td>Team {scorecard[i][0]}</td>
+                    <td>{scorecard[i][1]}</td>
                 </tr>
+                </Fragment>
             )
         }
 
         return (
             <div className="table">
                 <table>
-                    <tr>
+                    <thead>
+                        <tr>
                         <th>Team Name</th>
                         <th>Team Score</th>
-                    </tr>
+                        </tr>
+                    </thead>
                     <tbody>
                         {tableToCreate}
                     </tbody>
