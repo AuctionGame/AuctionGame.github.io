@@ -23,11 +23,11 @@ export default function SimplePlayerCard(props) {
   const imgSrc = 'cpng/' + props.value + '.jpg';
 
   var priceSection = '';
-  var bought = 'col not-sold-player';
+  var bought = 'col-sm-4 not-sold-player';
   if (props.price) {
     priceSection = <p>Sold Rs. {props.price}</p>;
     if (props.sold) {
-      bought = 'col sold-player';
+      bought = 'col-sm-4 sold-player';
     }
   }
 

@@ -73,3 +73,7 @@ header {
 .sold-player {
   opacity: 0.5;
 }
+
+#main-content {
+  background: rgba(0,0,0,0.04);
+}
