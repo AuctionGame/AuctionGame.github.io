@@ -60,6 +60,7 @@ header {
 .simple-player-card {
   min-width: 200px;
   margin-top: 24px;
+  height: 92%;
 }
 
 .input-gap {
