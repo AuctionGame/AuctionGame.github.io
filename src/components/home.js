@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 // import * as firebase from 'firebase';
 import Predict from './predict';
+import "../css/home.css"
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -31,7 +32,13 @@ function MiddleBlock(props) {
       );
     }
 
-    return <div className="row">{cardsElementList}</div>;
+    return (
+      <Fragment>
+      <h5 className="center" style={{ margin :"12px" }}>Money left with this team : {props.moneyLeft} </h5>
+    <div className="row">{cardsElementList}</div>
+    </Fragment>
+
+    )
   } else {
     // Above Auction One
 
@@ -49,7 +56,7 @@ function LeftTabs(props) {
   var heading = 'Auction Status';
 
   if (props.value) {
-    heading = 'Team ' + props.value;
+    heading = props.teamName;
   }
 
   return (
@@ -74,6 +81,26 @@ class Home extends React.Component {
         8: [6, 7, 9],
       },
       currentMain: 0,
+      teamNames: {
+        1: "Team 1",
+        2: "Team 2",
+        3: "Team 3",
+        4: "Team 4",
+        5: "Team 5",
+        6: "Team 6",
+        7: "Team 7",
+        8: "Team 8"
+      },
+      moneyLeft: {
+        1: 100,
+        2: 200,
+        3: 300,
+        4: 400,
+        5: 500,
+        6: 600,
+        7: 700,
+        8: 800
+      },
     };
   }
 
@@ -87,19 +114,56 @@ class Home extends React.Component {
   componentDidMount() {
     const db = firebase.firestore();
 
-    db.collection('team_players').onSnapshot((snap) => {
-      var empty_dict = {};
-      snap.forEach((doc) => {
-        empty_dict[doc.id] = doc.data();
+    // Snapshot for players sold
+    db.collection('team_players')
+      .onSnapshot((snap) => {
+        var empty_dict = {};
+        snap.forEach((doc) => {
+          empty_dict[doc.id] = doc.data();
+        });
+
+        // Empty dict created with all the values
+        this.setState({
+          teams: empty_dict,
+        });
       });
 
-      // Empty dict created with all the values
-      this.setState({
-        teams: empty_dict,
-      });
-    });
+    // A simple fetch for team names
+    db.collection('selectedTeams').get()
+      .then((snap) => {
 
-    
+        let teamNamesDict = {}
+        snap.forEach(doc => {
+          teamNamesDict[doc.id] = doc.data()['teamName'];
+        });
+
+        this.setState({
+          teamNames: teamNamesDict
+        });
+
+      }).catch(error => {
+        console.log("Team Name Fetch failed");
+      });
+
+    // A snapshot for money left
+    db.collection('selectedTeams')
+      .onSnapshot((snap) => {
+
+        let moneyLeftDict = {};
+        snap.forEach((doc) => {
+          moneyLeftDict[doc.id] = doc.data()['money'];
+        });
+
+        this.setState({
+          moneyLeft: moneyLeftDict
+        });
+
+        console.log(this.state.moneyLeft)
+
+      }, (error) => {
+        console.log("Money left snapshot failed", error);
+      });
+
   }
 
   render() {
@@ -117,6 +181,7 @@ class Home extends React.Component {
             key={i}
             value={i}
             handler={() => this.updateCurrrentMain(i)}
+            teamName={this.state.teamNames[i]}
           />,
         );
       }
@@ -131,6 +196,7 @@ class Home extends React.Component {
             </div>
             <div className="col-sm-9">
               <MiddleBlock
+                moneyLeft = {this.state.moneyLeft[currentMain]}
                 currentMain={currentMain}
                 teams={this.state.teams}
                 round={this.props.round}
