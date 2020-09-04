@@ -34,9 +34,9 @@ function MiddleBlock(props) {
 
     return (
       <Fragment>
-      <h5 className="center" style={{ margin :"12px" }}>Money left with this team : {props.moneyLeft} </h5>
-    <div className="row">{cardsElementList}</div>
-    </Fragment>
+        <h5 className="center" style={{ margin: "12px" }}>Money left with this team : {props.moneyLeft} </h5>
+        <div className="row">{cardsElementList}</div>
+      </Fragment>
 
     )
   } else {
@@ -81,6 +81,10 @@ class Home extends React.Component {
         8: [6, 7, 9],
       },
       currentMain: 0,
+      teamCodes: {
+        1: "asdfgh",
+        2: "hgfdsa"
+      },
       teamNames: {
         1: "Team 1",
         2: "Team 2",
@@ -101,6 +105,11 @@ class Home extends React.Component {
         7: 700,
         8: 800
       },
+      predictionDict: {
+        1: [1, 2],
+        2: [],
+        3: [2, 6]
+      }
     };
   }
 
@@ -133,17 +142,48 @@ class Home extends React.Component {
       .then((snap) => {
 
         let teamNamesDict = {}
+        let teamCodesDict = {}
         snap.forEach(doc => {
           teamNamesDict[doc.id] = doc.data()['teamName'];
+          teamCodesDict[doc.data()['teamCode']] = doc.id
         });
 
         this.setState({
-          teamNames: teamNamesDict
+          teamNames: teamNamesDict,
+          teamCodes: teamCodesDict
         });
+
+        // predictions list to be extracted from firebase
+        db.collection('predictions').get()
+          .then((snap) => {
+            let predictedTeams = {}
+            
+            snap.forEach(doc => {
+
+              const predictionArray = doc.data()['predictionArray']
+              for (let i = 0; i < predictionArray.length; i++) {
+                if (predictedTeams[predictionArray[i]]){
+                  predictedTeams[predictionArray[i]].push(teamCodesDict[doc.id])
+                }
+                else{
+                  predictedTeams[predictionArray[i]] = [teamCodesDict[doc.id]]
+                }
+              }
+
+            });
+
+            this.setState({
+              predictionDict: predictedTeams
+            });
+
+          }).catch(error => {
+            console.log("Team Name Fetch failed");
+          });
 
       }).catch(error => {
         console.log("Team Name Fetch failed");
       });
+
 
     // A snapshot for money left
     db.collection('selectedTeams')
@@ -196,7 +236,7 @@ class Home extends React.Component {
             </div>
             <div className="col-sm-9">
               <MiddleBlock
-                moneyLeft = {this.state.moneyLeft[currentMain]}
+                moneyLeft={this.state.moneyLeft[currentMain]}
                 currentMain={currentMain}
                 teams={this.state.teams}
                 round={this.props.round}
