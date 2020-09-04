@@ -98,6 +98,8 @@ class Home extends React.Component {
         teams: empty_dict,
       });
     });
+
+    
   }
 
   render() {
@@ -127,7 +129,7 @@ class Home extends React.Component {
             <div className="col-sm-3">
               <List id="left-bar">{leftBar}</List>
             </div>
-            <div className="col-sm-6">
+            <div className="col-sm-9">
               <MiddleBlock
                 currentMain={currentMain}
                 teams={this.state.teams}
