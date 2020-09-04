@@ -22,7 +22,7 @@ class App extends React.Component {
     // setting the inital state of the App
     this.state = {
       tabValue: 0,
-      round: 'prediction',
+      round: 'auction',
       messages: ['Hello message 1', 'hello message 2', 'Hello message 3'],
     };
 
@@ -46,20 +46,20 @@ class App extends React.Component {
 
   /* ----- Add Firebase details here ------ */
   // Add firebase updates and listener here
-  componentDidMount() {
-    const db = firebase.firestore();
-    const doc = db.collection('admin').doc('current');
+  // componentDidMount() {
+  //   const db = firebase.firestore();
+  //   const doc = db.collection('admin').doc('current');
 
-    doc.onSnapshot(
-      (snap) => {
-        console.log('Recieved Round Info', snap.data().pid);
-        this.updateRound(snap.data().pid);
-      },
-      (err) => {
-        console.log(`Encountered error: ${err}`);
-      },
-    );
-  }
+  //   doc.onSnapshot(
+  //     (snap) => {
+  //       console.log('Recieved Round Info', snap.data().pid);
+  //       this.updateRound(snap.data().pid);
+  //     },
+  //     (err) => {
+  //       console.log(`Encountered error: ${err}`);
+  //     },
+  //   );
+  // }
 
   render() {
     // First check for the Quiz Round from the firebase
@@ -117,7 +117,7 @@ class App extends React.Component {
                 <Player />
               </Route>
               <Route path="/teams">
-                <Teams />
+                <Teams round={this.state.round}/>
               </Route>
               <Route path="/">
                 <div className="container-fluid">
