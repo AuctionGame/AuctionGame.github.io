@@ -65,6 +65,7 @@ function MiddleBlock(props) {
       return (
         <div className="row">
           <SimplePlayerCard colSize="4" highQuality={true} value={props.round} toShowBidPrice={true} fixedHeight={true} />
+
           <div className="col-sm-8">
             <div id="predicted-by-list" style={{margin: "8px"}}>
               <h3 className="center" style={{ margin: "20px 0 8px 0" }}>Predicted by</h3>
