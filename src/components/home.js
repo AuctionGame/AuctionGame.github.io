@@ -81,7 +81,7 @@ class Home extends React.Component {
         4: "Team 4",
         5: "Team 5",
         6: "Team 6",
-        7: "Team 7", 
+        7: "Team 7",
         8: "Team 8"
       },
       moneyLeft: {
@@ -91,7 +91,7 @@ class Home extends React.Component {
         4: 400,
         5: 500,
         6: 600,
-        7: 700, 
+        7: 700,
         8: 800
       },
     };
@@ -107,33 +107,54 @@ class Home extends React.Component {
   componentDidMount() {
     const db = firebase.firestore();
 
-    db.collection('team_players').onSnapshot((snap) => {
-      var empty_dict = {};
-      snap.forEach((doc) => {
-        empty_dict[doc.id] = doc.data();
+    // Snapshot for players sold
+    db.collection('team_players')
+      .onSnapshot((snap) => {
+        var empty_dict = {};
+        snap.forEach((doc) => {
+          empty_dict[doc.id] = doc.data();
+        });
+
+        // Empty dict created with all the values
+        this.setState({
+          teams: empty_dict,
+        });
       });
 
-      // Empty dict created with all the values
-      this.setState({
-        teams: empty_dict,
-      });
-    });
-
+    // A simple fetch for team names
     db.collection('selectedTeams').get()
-    .then((snap) => {
-      
-      let teamNamesDict = {}
-      snap.forEach(doc => {
-        teamNamesDict[doc.id] = doc.data()['teamName'];
+      .then((snap) => {
+
+        let teamNamesDict = {}
+        snap.forEach(doc => {
+          teamNamesDict[doc.id] = doc.data()['teamName'];
+        });
+
+        this.setState({
+          teamNames: teamNamesDict
+        });
+
+      }).catch(error => {
+        console.log("Team Name Fetch failed");
       });
 
-      this.setState({
-        teamNames: teamNamesDict
+    // A snapshot for meny left
+    db.collection('selectedTeams')
+      .onSnapshot((snap) => {
+
+        let moneyLeftDict = {};
+        snap.forEach((doc) => {
+          moneyLeftDict[doc.id] = doc.data()['money'];
+        });
+
+        this.setState({
+          moneyLeft: moneyLeftDict
+        });
+
+      }, (error) => {
+        console.log("Meny left snapshot failed", error);
       });
-    }).catch(error => {
-      console.log("Team Name Fetch failed");
-    })
-    
+
   }
 
   render() {
