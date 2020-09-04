@@ -49,7 +49,7 @@ function LeftTabs(props) {
   var heading = 'Auction Status';
 
   if (props.value) {
-    heading = 'Team ' + props.value;
+    heading = props.teamName;
   }
 
   return (
@@ -74,6 +74,26 @@ class Home extends React.Component {
         8: [6, 7, 9],
       },
       currentMain: 0,
+      teamNames: {
+        1: "Team 1",
+        2: "Team 2",
+        3: "Team 3",
+        4: "Team 4",
+        5: "Team 5",
+        6: "Team 6",
+        7: "Team 7", 
+        8: "Team 8"
+      },
+      moneyLeft: {
+        1: 100,
+        2: 200,
+        3: 300,
+        4: 400,
+        5: 500,
+        6: 600,
+        7: 700, 
+        8: 800
+      },
     };
   }
 
@@ -99,6 +119,20 @@ class Home extends React.Component {
       });
     });
 
+    db.collection('selectedTeams').get()
+    .then((snap) => {
+      
+      let teamNamesDict = {}
+      snap.forEach(doc => {
+        teamNamesDict[doc.id] = doc.data()['teamName'];
+      });
+
+      this.setState({
+        teamNames: teamNamesDict
+      });
+    }).catch(error => {
+      console.log("Team Name Fetch failed");
+    })
     
   }
 
@@ -117,6 +151,7 @@ class Home extends React.Component {
             key={i}
             value={i}
             handler={() => this.updateCurrrentMain(i)}
+            teamName={this.state.teamNames[i]}
           />,
         );
       }
