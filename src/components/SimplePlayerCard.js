@@ -39,6 +39,11 @@ export default function SimplePlayerCard(props) {
     colToUse = props.colSize;
   }
 
+  let fullHeight = 'simple-player-card height-in-percent';
+  if (props.fixedHeight) {
+    fullHeight = 'simple-player-card';
+  }
+
   var priceSection = '';
   var bought = 'col-sm-'+ colToUse +' not-sold-player';
   if (props.price) {
@@ -53,9 +58,11 @@ export default function SimplePlayerCard(props) {
   bidPrice = <p>Starting Bid Rs. {bidprice[props.value]}</p>
   }
 
+  
+
   return (
     <div className={bought}>
-      <Card className="simple-player-card">
+      <Card className={fullHeight}>
         <CardContent>
           <Typography
             className={classes.title}

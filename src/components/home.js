@@ -64,13 +64,45 @@ function MiddleBlock(props) {
 
       return (
         <div className="row">
-          <SimplePlayerCard colSize="4" highQuality={true} value={props.round} toShowBidPrice={true} />
+          <SimplePlayerCard colSize="4" highQuality={true} value={props.round} toShowBidPrice={true} fixedHeight={true} />
+
           <div className="col-sm-8">
             <div id="predicted-by-list" style={{margin: "8px"}}>
               <h3 className="center" style={{ margin: "20px 0 8px 0" }}>Predicted by</h3>
               
                 {predictedByList}
               
+            </div>
+            <div id="player-stats" className="jumbotron" style={{ margin: "32px", padding: "16px"}}>
+              <h4 className="center">2019</h4>
+              <table className="table">
+                <tbody>
+                  <tr>
+                    <td>Matches</td>
+                    <td>14</td>
+                  </tr>
+                  <tr>
+                    <td>Runs</td>
+                    <td>593</td>
+                  </tr>
+                  <tr>
+                    <td>Average</td>
+                    <td>53.90</td>
+                  </tr>
+                  <tr>
+                    <td>Strike Rate</td>
+                    <td>135.38</td>
+                  </tr>
+                  <tr>
+                    <td>Catches</td>
+                    <td>7</td>
+                  </tr>
+                  <tr>
+                    <td>Stumpins</td>
+                    <td>0</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

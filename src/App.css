@@ -60,6 +60,9 @@ header {
 .simple-player-card {
   min-width: 200px;
   margin-top: 24px;
+}
+
+.height-in-percent {
   height: 92%;
 }
 
