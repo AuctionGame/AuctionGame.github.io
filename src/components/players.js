@@ -1,15 +1,39 @@
 import React from 'react';
 import SimplePlayerCard from './SimplePlayerCard';
+import Button from '@material-ui/core/Button'
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+import Stats from './Stats'
 
 class Player extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       soldDict: {},
+      toOpen: false,
     };
+    //this.handleDialogOpen = this.handleDialogOpen.bind(this)
+  }
+
+  handleFailDialogClose = () => {
+    this.setState({
+      toOpen: false
+    })
+  }
+
+  handleDialogOpen(i){
+    this.setState({
+      toOpen: true
+    })
+    console.log("handle dialog open" , i)
   }
 
   componentDidMount() {
@@ -40,16 +64,44 @@ class Player extends React.Component {
   render() {
     const soldDict = this.state.soldDict;
 
-    const elementArr = [];
+    const array = [];
     for (let i = 1; i <= 60; i++) {
-      elementArr.push(
-        <SimplePlayerCard key={i} value={i} sold={true} price={soldDict[i]} colSize="3" />,
-      );
+      array.push(i);
     }
+
+    const elementArr = array.map(i => (
+      <SimplePlayerCard key={i} value={i} sold={true} handler={() => this.handleDialogOpen(i)} price={soldDict[i]} colSize="3" />
+    ))
 
     return (
       <div className="container">
         <div className="row">{elementArr}</div>
+
+          <Dialog
+          open={this.state.toOpen}
+          onClose={this.handleFailDialogClose}
+          aria-labelledby="Login Failed"
+          aria-describedby="Fail dialog"
+        >
+          <DialogTitle id="alert-dialog-title">
+            Title
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <Stats playerNo = '1'/> 
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={this.handleFailDialogClose}
+              color="primary"
+              autoFocus
+            >
+              close
+            </Button>
+          </DialogActions>
+        </Dialog>
+
       </div>
     );
   }
