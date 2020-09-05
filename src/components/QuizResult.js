@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
@@ -8,9 +8,17 @@ export default class QuizResult extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            scorecard: {
-               
-            }
+            scorecard: {},
+            teamNames: {
+                1: "Team 1",
+                2: "Team 2",
+                3: "Team 3",
+                4: "Team 4",
+                5: "Team 5",
+                6: "Team 6",
+                7: "Team 7",
+                8: "Team 8"
+            },
         }
     }
 
@@ -32,25 +40,42 @@ export default class QuizResult extends React.Component {
                 // Sort the array based on the second element
                 items.sort(function (first, second) {
                     return second[1] - first[1];
-                });         
-                this.setState ({
+                });
+                this.setState({
                     scorecard: items
                 })
             }
         )
+
+        db.collection("registeredTeams").get()
+        .then((doc) => {
+
+            let teamNames = {}
+            doc.forEach(row => {
+                teamNames[row.id] = row.data()['teamName'];
+            });
+
+            this.setState({
+                teamNames: teamNames
+            });
+        })
+        .catch((error) => {
+            console.log("Error in quiz Result", error);
+        });
+
 
     }
 
     render() {
         const scorecard = this.state.scorecard
         const tableToCreate = []
-        for (let i = 0;i<scorecard.length;i++){
+        for (let i = 0; i < scorecard.length; i++) {
             tableToCreate.push(
-                <Fragment key = {i}>
-                <tr>
-                    <td>Team {scorecard[i][0]}</td>
-                    <td>{scorecard[i][1]}</td>
-                </tr>
+                <Fragment key={i}>
+                    <tr>
+                        <td>{this.state.teamNames[scorecard[i][0]]}</td>
+                        <td>{scorecard[i][1]}</td>
+                    </tr>
                 </Fragment>
             )
         }
@@ -60,8 +85,8 @@ export default class QuizResult extends React.Component {
                 <table>
                     <thead>
                         <tr>
-                        <th>Team Name</th>
-                        <th>Team Score</th>
+                            <th>Team Name</th>
+                            <th>Team Score</th>
                         </tr>
                     </thead>
                     <tbody>
