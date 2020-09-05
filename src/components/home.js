@@ -67,44 +67,65 @@ function MiddleBlock(props) {
           <SimplePlayerCard colSize="4" highQuality={true} value={props.round} toShowBidPrice={true} fixedHeight={true} />
 
           <div className="col-sm-8">
-            <div id="predicted-by-list" style={{margin: "8px"}}>
-              <h3 className="center" style={{ margin: "20px 0 8px 0" }}>Predicted by</h3>
-              
-                {predictedByList}
-              
-            </div>
-            <div id="player-stats" className="jumbotron" style={{ margin: "32px", padding: "16px"}}>
-              <h4 className="center">2019</h4>
+            
+            <div id="player-stats" className="jumbotron" style={{ margin: "22px", padding: "10px"}}>
               <table className="table">
+                <thead>
+                  <tr>
+                    <td></td>
+                    <td style={{ fontWeight : "bold"}}>2019</td>
+                    <td style={{ fontWeight : "bold"}}>2018</td>
+                    <td style={{ fontWeight : "bold"}}>2017</td>
+                  </tr>
+                </thead>
                 <tbody>
                   <tr>
-                    <td>Matches</td>
-                    <td>14</td>
+                    <td style={{ fontWeight : "bold"}}>Matches</td>
+                    <td>15</td>
+                    <td>16</td>
+                    <td>16</td>
                   </tr>
                   <tr>
-                    <td>Runs</td>
-                    <td>593</td>
+                    <td style={{ fontWeight : "bold"}}>Runs</td>
+                    <td>416</td>
+                    <td>455</td>
+                    <td>290</td>
                   </tr>
                   <tr>
-                    <td>Average</td>
-                    <td>53.90</td>
+                    <td style={{ fontWeight : "bold"}}>Average</td>
+                    <td>83.20</td>
+                    <td>75.83</td>
+                    <td>26.63</td>
                   </tr>
                   <tr>
-                    <td>Strike Rate</td>
+                    <td style={{ fontWeight : "bold"}}>Strike Rate</td>
                     <td>135.38</td>
+                    <td>150.66</td>
+                    <td>116.00</td>
                   </tr>
                   <tr>
-                    <td>Catches</td>
-                    <td>7</td>
+                    <td style={{ fontWeight : "bold"}}>Catches</td>
+                    <td>11</td>
+                    <td>11</td>
+                    <td>10</td>
                   </tr>
                   <tr>
-                    <td>Stumpins</td>
-                    <td>0</td>
+                    <td style={{ fontWeight : "bold"}}>Stumpins</td>
+                    <td>5</td>
+                    <td>3</td>
+                    <td>3</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-          </div>
+            </div>
+            <div id="predicted-by-list" class = "jumbotron prediction" style={{ margin: "12px", height: "320px"}}>
+              <h3 className="center">Predicted by</h3>
+              
+                {predictedByList}
+              
+            </div>
+        
         </div>
       )
     }
