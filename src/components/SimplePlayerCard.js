@@ -61,7 +61,7 @@ export default function SimplePlayerCard(props) {
   
 
   return (
-    <div className={bought}>
+    <div className={bought} onClick={props.handler}>
       <Card className={fullHeight}>
         <CardContent>
           <Typography

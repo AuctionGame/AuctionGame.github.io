@@ -7,6 +7,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import SimplePlayerCard from './SimplePlayerCard';
+import Stats from './Stats';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -56,7 +57,7 @@ function MiddleBlock(props) {
             <li style={{ marginLeft: "24px" }}>{data}</li>
           )
         });
-      } catch(err) {
+      } catch (err) {
         // Here error will come when it is prediccted by none
         // i.e predictedByList is empty
         predictedByList.push(<p className="center"> No Team</p>)
@@ -67,65 +68,15 @@ function MiddleBlock(props) {
           <SimplePlayerCard colSize="4" highQuality={true} value={props.round} toShowBidPrice={true} fixedHeight={true} />
 
           <div className="col-sm-8">
-            
-            <div id="player-stats" className="jumbotron" style={{ margin: "22px", padding: "10px"}}>
-              <table className="table">
-                <thead>
-                  <tr>
-                    <td></td>
-                    <td style={{ fontWeight : "bold"}}>2019</td>
-                    <td style={{ fontWeight : "bold"}}>2018</td>
-                    <td style={{ fontWeight : "bold"}}>2017</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td style={{ fontWeight : "bold"}}>Matches</td>
-                    <td>15</td>
-                    <td>16</td>
-                    <td>16</td>
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight : "bold"}}>Runs</td>
-                    <td>416</td>
-                    <td>455</td>
-                    <td>290</td>
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight : "bold"}}>Average</td>
-                    <td>83.20</td>
-                    <td>75.83</td>
-                    <td>26.63</td>
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight : "bold"}}>Strike Rate</td>
-                    <td>135.38</td>
-                    <td>150.66</td>
-                    <td>116.00</td>
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight : "bold"}}>Catches</td>
-                    <td>11</td>
-                    <td>11</td>
-                    <td>10</td>
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight : "bold"}}>Stumpins</td>
-                    <td>5</td>
-                    <td>3</td>
-                    <td>3</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            </div>
-            <div id="predicted-by-list" class = "jumbotron prediction" style={{ margin: "12px", height: "320px"}}>
-              <h3 className="center">Predicted by</h3>
-              
-                {predictedByList}
-              
-            </div>
-        
+            <Stats key={props.round} playerNo={props.round} />
+          </div>
+          <div id="predicted-by-list" className="jumbotron prediction" style={{ margin: "12px" }}>
+            <h3 className="center">Predicted by</h3>
+
+            {predictedByList}
+
+          </div>
+
         </div>
       )
     }

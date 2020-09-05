@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import SimplePlayerCard from "./SimplePlayerCard"
 import "../css/teams.css"
 import playerName from "../data/players.json"
 
