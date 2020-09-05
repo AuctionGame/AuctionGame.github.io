@@ -83,7 +83,7 @@ export default class QuizResult extends React.Component {
         return (
             <div className="table" style={{padding: "60px"}}>
                 <p><h1 style={{textAlign: "center"}}>Quiz Results!</h1></p>
-                <table  style={{margin: "auto", width: "70%", border: '1px solid black', borderRadius: '100px!important'}}>
+                <table  style={{margin: "auto", width: "70%", border: '1px solid black', borderRadius: '5px!important'}}>
                     <thead class="thead-dark">
                         <tr style={{textAlign: "center"}}>
                             <th>Team Name</th>

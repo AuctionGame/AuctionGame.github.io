@@ -68,7 +68,7 @@ function MiddleBlock(props) {
 
           <div className="col-sm-8">
             
-            <div id="player-stats" className="jumbotron" style={{ margin: "22px", padding: "10px"}}>
+            <div id="player-stats" className="jumbotron container-box" style={{ margin: "22px", padding: "10px"}}>
               <table className="table">
                 <thead>
                   <tr>
@@ -140,7 +140,7 @@ function LeftTabs(props) {
   }
 
   return (
-    <ListItem button key={props.value} onClick={props.handler}>
+    <ListItem button key={props.value} onClick={props.handler} style={{background: "#b8d0cf", border: "1px solid", margin: "auto"}}>
       <ListItemText primary={heading} />
     </ListItem>
   );

@@ -10,7 +10,8 @@
 }
 
 .App {
-  text-align: center;
+  text-align: center
+   ;
 }
 
 #loading {
@@ -24,6 +25,8 @@ header {
 #main-content {
   flex: 1 1 auto;
   overflow: auto;
+  /* background-color: #d8d4ce */
+  background-color: #efece8;
 }
 
 .center {
@@ -78,6 +81,17 @@ header {
   opacity: 0.5;
 }
 
-#main-content {
-  background: rgba(0,0,0,0.04);
+/* 
+.updates-table{
+  background-color: #abd6d5;
+}
+
+.container-box, .prediction{
+  background-color: #efefe6
+
+} */
+
+.jumbotron {
+  background-color: #b8d0cf
+
 }
