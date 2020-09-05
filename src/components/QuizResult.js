@@ -73,6 +73,7 @@ export default class QuizResult extends React.Component {
             tableToCreate.push(
                 <Fragment key={i}>
                     <tr class="table-info" style={{textAlign: "center"}}>
+                        <td>{i+1}</td>
                         <td>{this.state.teamNames[scorecard[i][0]]}</td>
                         <td>{scorecard[i][1]}</td>
                     </tr>
@@ -86,6 +87,7 @@ export default class QuizResult extends React.Component {
                 <table  style={{margin: "auto", width: "70%", border: '1px solid black', borderRadius: '100px!important'}}>
                     <thead class="thead-dark">
                         <tr style={{textAlign: "center"}}>
+                            <th>Rank</th>
                             <th>Team Name</th>
                             <th>Team Score</th>
                         </tr>
