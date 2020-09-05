@@ -11,7 +11,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import Stats from './Stats'
+import Stats from './Stats';
+import playerNames from '../data/players.json';
 
 class Player extends React.Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class Player extends React.Component {
     this.state = {
       soldDict: {},
       toOpen: false,
+      currentClick: 1
     };
     //this.handleDialogOpen = this.handleDialogOpen.bind(this)
   }
@@ -31,7 +33,8 @@ class Player extends React.Component {
 
   handleDialogOpen(i){
     this.setState({
-      toOpen: true
+      toOpen: true,
+      currentClick: i
     })
     console.log("handle dialog open" , i)
   }
@@ -83,12 +86,12 @@ class Player extends React.Component {
           aria-labelledby="Login Failed"
           aria-describedby="Fail dialog"
         >
-          <DialogTitle id="alert-dialog-title">
-            Title
+          <DialogTitle id="alert-dialog-title" style={{ textAlign: "center" }}>
+           {playerNames[this.state.currentClick]}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              <Stats playerNo = '1'/> 
+              <Stats playerNo={this.state.currentClick} /> 
             </DialogContentText>
           </DialogContent>
           <DialogActions>

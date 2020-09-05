@@ -24,7 +24,7 @@ export default function Stats(props) {
     const tempList = []
     tempList.push(<td style={{ fontWeight: "bold" }}>{field}</td>)
     for(var ob in data[field]) {
-      tempList.push(<td>{data[field][ob]}</td>)
+      tempList.push(<td >{data[field][ob]}</td>)
     }
     Body.push(<tr>{tempList}</tr>)
   }
