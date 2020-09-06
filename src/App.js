@@ -54,7 +54,7 @@ class App extends React.Component {
     doc.onSnapshot(
       (snap) => {
         console.log('Recieved Round Info', snap.data().pid);
-        // this.updateRound(snap.data().pid);
+        this.updateRound(snap.data().pid);
       },
       (err) => {
         console.log(`Encountered error: ${err}`);
