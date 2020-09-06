@@ -2,8 +2,10 @@ import React from 'react';
 
 class MyCard extends React.Component {
   render() {
-    const img = this.props.img;
+    const img = 'cpng/' + this.props.img + '.jpg';
     const name = this.props.name;
+
+
 
     const status = this.props.status;
     var color = 'btn-primary';
