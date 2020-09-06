@@ -23,7 +23,7 @@ class App extends React.Component {
     // setting the inital state of the App
     this.state = {
       tabValue: 0,
-      round: '1',
+      round: 'prediction',
       messages: ['Hello message 1', 'hello message 2', 'Hello message 3'],
     };
 
@@ -54,7 +54,7 @@ class App extends React.Component {
     doc.onSnapshot(
       (snap) => {
         console.log('Recieved Round Info', snap.data().pid);
-        this.updateRound(snap.data().pid);
+        // this.updateRound(snap.data().pid);
       },
       (err) => {
         console.log(`Encountered error: ${err}`);
