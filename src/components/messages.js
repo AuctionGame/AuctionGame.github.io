@@ -41,9 +41,9 @@ class Messages extends React.Component {
     }
 
     return (
-      <div className="jumbotron" id="updates-container">
+      <div className="jumbotron updates-table" id="updates-container">
         <h1 className="center">Updates</h1>
-        <ul>{messageEl}</ul>
+        <ul style={{overflow: "auto", height:"40vh"}}>{messageEl}</ul>
       </div>
     );
   }

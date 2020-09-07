@@ -68,6 +68,7 @@ function MiddleBlock(props) {
           <SimplePlayerCard colSize="4" highQuality={true} value={props.round} toShowBidPrice={true} fixedHeight={true} />
 
           <div className="col-sm-8">
+
             <Stats key={props.round} playerNo={props.round} />
           </div>
           <div id="predicted-by-list" className="jumbotron prediction" style={{ margin: "12px" }}>
@@ -76,7 +77,6 @@ function MiddleBlock(props) {
             {predictedByList}
 
           </div>
-
         </div>
       )
     }
@@ -91,7 +91,7 @@ function LeftTabs(props) {
   }
 
   return (
-    <ListItem button key={props.value} onClick={props.handler}>
+    <ListItem button key={props.value} onClick={props.handler} style={{background: "#b8d0cf", border: "1px solid", margin: "auto"}}>
       <ListItemText primary={heading} />
     </ListItem>
   );
