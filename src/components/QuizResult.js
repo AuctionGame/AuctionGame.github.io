@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-
+import PriorityResults from "./priorityResults";
 
 
 export default class QuizResult extends React.Component {
@@ -19,7 +19,22 @@ export default class QuizResult extends React.Component {
                 7: "Team 7",
                 8: "Team 8"
             },
+            teamDetails: {},
+            predictionDict: {},
+            toShowSelected: true,
         }
+    }
+
+    showQuiz = () => {
+        this.setState({
+            toShowSelected: true,
+        });
+    }
+
+    showIPO = () => {
+        this.setState({
+            toShowSelected: false,
+        });
     }
 
     componentDidMount() {
@@ -48,56 +63,88 @@ export default class QuizResult extends React.Component {
         )
 
         db.collection("registeredTeams").get()
-        .then((doc) => {
+            .then((doc) => {
 
-            let teamNames = {}
-            doc.forEach(row => {
-                teamNames[row.id] = row.data()['teamName'];
-            });
+                let teamNames = {}
+                doc.forEach(row => {
+                    teamNames[row.id] = row.data()['teamName'];
+                });
 
-            this.setState({
-                teamNames: teamNames
+                this.setState({
+                    teamNames: teamNames
+                });
+            })
+            .catch((error) => {
+                console.log("Error in quiz Result", error);
             });
-        })
-        .catch((error) => {
-            console.log("Error in quiz Result", error);
-        });
 
 
     }
 
     render() {
-        const scorecard = this.state.scorecard
-        const tableToCreate = []
-        for (let i = 0; i < scorecard.length; i++) {
-            tableToCreate.push(
-                <Fragment key={i}>
-                    <tr class="table-info" style={{textAlign: "center"}}>
-                        <td>{i+1}</td>
-                        <td>{this.state.teamNames[scorecard[i][0]]}</td>
-                        <td>{scorecard[i][1]}</td>
-                    </tr>
+        if (this.state.toShowSelected) {
+            const scorecard = this.state.scorecard
+            const tableToCreate = []
+            for (let i = 0; i < scorecard.length; i++) {
+                tableToCreate.push(
+                    <Fragment key={i}>
+                        <tr className="table-info" style={{ textAlign: "center" }}>
+                            <td>{i + 1}</td>
+                            <td>{this.state.teamNames[scorecard[i][0]]}</td>
+                            <td>{scorecard[i][1]}</td>
+                        </tr>
+                    </Fragment>
+                )
+            }
+
+            return (
+                <Fragment>
+
+                    <div id="navbar" className="container-fluid">
+                        <div className="row">
+                            <div className="col center" onClick={this.showQuiz}> Quiz </div>
+                            <div className="col center" onClick={this.showIPO}> IPO Leaderboard </div>
+                        </div>
+
+                    </div>
+
+                    <div className="table" style={{ padding: "60px" }}>
+                        <h1 style={{ textAlign: "center" }}>Quiz Results!</h1>
+                        <table style={{ margin: "auto", width: "70%", border: '1px solid black', borderRadius: '5px!important' }}>
+                            <thead className="thead-dark">
+                                <tr style={{ textAlign: "center" }}>
+                                    <th>Rank</th>
+                                    <th>Team Name</th>
+                                    <th>Team Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {tableToCreate}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </Fragment>
+
+
+            )
+
+        }
+        else {
+
+            return (
+                <Fragment>
+                    <div id="navbar" class="container-fluid">
+                        <div class="row">
+                            <div class="col center" onClick={this.showQuiz}> Quiz </div>
+                            <div class="col center" onClick={this.showIPO}> IPO Leaderboard </div>
+                        </div>
+                    </div>
+
+                    <PriorityResults />
                 </Fragment>
             )
         }
-
-        return (
-            <div className="table" style={{padding: "60px"}}>
-                <p><h1 style={{textAlign: "center"}}>Quiz Results!</h1></p>
-                <table  style={{margin: "auto", width: "70%", border: '1px solid black', borderRadius: '5px!important'}}>
-                    <thead class="thead-dark">
-                        <tr style={{textAlign: "center"}}>
-                            <th>Rank</th>
-                            <th>Team Name</th>
-                            <th>Team Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {tableToCreate}
-                    </tbody>
-                </table>
-            </div>
-        )
 
     }
 }
