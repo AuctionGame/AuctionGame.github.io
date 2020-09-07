@@ -95,3 +95,14 @@ header {
   background-color: #b8d0cf
 
 }
+
+#navbar{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: aliceblue;
+  color: blue;
+}
+
+#navbar div {
+  cursor: pointer; 
+}
