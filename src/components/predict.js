@@ -215,19 +215,19 @@ class Predict extends React.Component {
 
       if (this.state.toShowPriority) {
         return (
-          <Priority />
+          <Priority loginId={this.state.loginId} />
         )
       } else {
 
         // This is for predictions
         const items = [];
         for (let i = 1; i <= 60; i++) {
-          var imgSrc = 'cpng/' + i + '.jpg';
+          
           var status = this.state.predictionArray.includes(i);
           items.push(
             <MyCard
               key={i}
-              img={imgSrc}
+              img={i}
               name={players[i]}
               status={status}
               type="Bowler"

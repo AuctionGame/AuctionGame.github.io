@@ -2,8 +2,10 @@ import React from 'react';
 
 class MyCard extends React.Component {
   render() {
-    const img = this.props.img;
+    const img = 'cpng/' + this.props.img + '.jpg';
     const name = this.props.name;
+
+
 
     const status = this.props.status;
     var color = 'btn-primary';
@@ -14,7 +16,7 @@ class MyCard extends React.Component {
     }
 
     return (
-      <div className="col-sm-4 col-md-3 col-lg-2">
+      <div className="col-sm-4 col-md-3 col-lg-2" style={{height:"80%"}}>
         <div className="card gallery-item">
           <img className="card-img-top" src={img} alt={name} />
           <div className="card-body">
