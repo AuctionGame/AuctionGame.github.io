@@ -215,7 +215,7 @@ class Predict extends React.Component {
 
       if (this.state.toShowPriority) {
         return (
-          <Priority />
+          <Priority loginId={this.state.loginId} />
         )
       } else {
 
