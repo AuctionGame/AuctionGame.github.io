@@ -6,19 +6,28 @@ export default function Stats(props) {
   var pdata = playerdata[props.playerNo]
   const heading = []
   const data = {}
-  for (const [year, value] of Object.entries(pdata)) {
-    // use key and value
-    heading.push(<td style={{ fontWeight: "bold" }}>{year}</td>)
-    for(const [field,value1] of Object.entries(pdata[year])) {
-      if (data[field]){
-        data[field].push(pdata[year][field])
-      }
-      else{
-        data[field] = [pdata[year][field]]
-      }
+  try {
 
+    for (const [year, value] of Object.entries(pdata)) {
+      // use key and value
+      heading.push(<td style={{ fontWeight: "bold" }}>{year}</td>)
+      for(const [field,value1] of Object.entries(pdata[year])) {
+        if (data[field]){
+          data[field].push(pdata[year][field])
+        }
+        else{
+          data[field] = [pdata[year][field]]
+        }
+  
+      }
     }
+    
+  } catch (error) {
+
+    console.log("stats.js mein sed lyf 3")
+    
   }
+  
   const Body = []
   for(var field in data) {
     const tempList = []

@@ -7,33 +7,21 @@ import UnseletedTeams from "./unselectedTeams"
 import TeamCard from "./teamCard.js"
 
 
-class Teams extends React.Component {
+export default class UnselectedTeams extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
       teamDetails: {},
       predictionDict: {},
-      toShowSelected : true,
     };
-  }
-
-  showSelected = () => {
-    this.setState({
-      toShowSelected : true,
-    });
-  }
-
-  showUnselected = () => {
-    this.setState({
-      toShowSelected : false,
-    });
   }
 
   componentDidMount() {
     // Here we will extract the data from firebase
     const db = firebase.firestore();
 
-    db.collection('selectedTeams') //change this back to selected teams :p
+    db.collection('unselectedTeams') //change this back to selected teams :p
       .onSnapshot(
         (snap) => {
           var Dict = {};
@@ -58,7 +46,7 @@ class Teams extends React.Component {
 
       var predictionArray = {};
 
-      db.collection('predictions')
+      db.collection('priority')
         .get()
         .then((snap) => {
           snap.forEach((doc) => {
@@ -78,7 +66,6 @@ class Teams extends React.Component {
 
   render() {
 
-    if (this.state.toShowSelected) {
     const teamDetails = this.state.teamDetails;
 
     const teamCodes = [];
@@ -96,7 +83,7 @@ class Teams extends React.Component {
       teamCodes.push(teamDetails[key]['teamCode']);
     }
 
-    for (let key in teamDetails) {
+    for (let key=1; key<teamCodes.length+1; key++) {
       allTeamsComponent.push(
         <TeamCard
           key={key}
@@ -105,44 +92,15 @@ class Teams extends React.Component {
           teamLeader={teamLeaders[key - 1]}
           teamCode={teamCodes[key - 1]}
           prediction_arr={predictionDict[teamCodes[key - 1]]}
+          priority = {true}
         />,
       );
     }
-    
 
     return (
-      <Fragment>
-
-        <div id="navbar" class="container-fluid">
-          <div class="row">
-            <div class="col center" onClick={this.showSelected}> Teams for Auction</div>
-            <div class="col center" onClick={this.showUnselected}> Teams for IPO </div>
-          </div>
-
-        </div>
-
-        <div className="container-fluid">{allTeamsComponent}</div>
-
-      </Fragment>
-
+    
+      <div className="container-fluid">{allTeamsComponent}</div>
     )
-    }
-    else {
 
-      return(
-        <Fragment>
-        <div id="navbar" class="container-fluid">
-          <div class="row">
-            <div class="col center" onClick={this.showSelected}> Teams for Auction</div>
-            <div class="col center" onClick={this.showUnselected}> Teams for IPO </div>
-          </div>
-        </div>
-
-        <UnseletedTeams />
-      </Fragment>
-      )
-    }
   }
 }
-
-export default Teams;
