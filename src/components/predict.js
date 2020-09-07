@@ -2,6 +2,7 @@ import React from 'react';
 import MyCard from './card';
 import LoginHandler from './LoginHandler';
 
+import Priority from './priority';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -17,15 +18,18 @@ import players from '../data/players.json';
 class Predict extends React.Component {
   constructor(props) {
     super(props);
+
+    // TO change loginId and toShowPriority
     this.state = {
       predictionArray: [],
       open: false,
       dialogName: 'Confirm',
       confirmNumber: 0,
-      loginId: '',
+      loginId: 'mockteam2',
       loginFail: false,
       loginFailHeading: 'Login Unsuccessful',
       loginFailDesc: 'Please check you secret Id and try again!',
+      toShowPriority: true
     };
 
     this.handleFailDialogClose = this.handleFailDialogClose.bind(this);
@@ -59,13 +63,40 @@ class Predict extends React.Component {
                   predictionArray: predictionData,
                 });
               },
-              (err) => {},
+              (err) => { },
             );
         } else {
-          this.setState({
-            loginFail: true,
-          });
-        }
+
+          // This means he is not in predictions, let's also check for 
+
+          db.collection('priority')
+            .doc(val)
+            .get()
+            .then((doc2) => {
+              if (doc2.exists) {
+
+                this.setState({
+                  toShowPriority: true,
+                  loginId: val
+                })
+
+              } else {
+
+                // No such players exists!
+                this.setState({
+                  loginFail: true,
+                });
+              }
+            })
+            .catch((error) => {
+              alert("Network Error");
+            });
+
+
+        } // Enf of first predictions else
+      })
+      .catch(error => {
+        alert("Network error");
       });
   }
 
@@ -182,85 +213,92 @@ class Predict extends React.Component {
     if (this.state.loginId) {
       // document.getElementById('submitBtn').disabled = false -----> write this in reachJS :p
 
-      // It's better to use map, however we are usign let for this
-      const items = [];
-      for (let i = 1; i <= 60; i++) {
-        var imgSrc = 'cpng/' + i + '.jpg';
-        var status = this.state.predictionArray.includes(i);
-        items.push(
-          <MyCard
-            key={i}
-            img={imgSrc}
-            name={players[i]}
-            status={status}
-            type="Bowler"
-            handler={() => this.addPrediction(i)}
-          />,
-        );
-      }
+      if (this.state.toShowPriority) {
+        return (
+          <Priority />
+        )
+      } else {
 
-      var submitButton = <Button disabled>Submit</Button>;
+        // This is for predictions
+        const items = [];
+        for (let i = 1; i <= 60; i++) {
+          var imgSrc = 'cpng/' + i + '.jpg';
+          var status = this.state.predictionArray.includes(i);
+          items.push(
+            <MyCard
+              key={i}
+              img={imgSrc}
+              name={players[i]}
+              status={status}
+              type="Bowler"
+              handler={() => this.addPrediction(i)}
+            />,
+          );
+        }
 
-      if (this.state.predictionArray.length >= 7) {
-        submitButton = (
-          <button onClick={this.handleDialogOpen} className="btn btn-success">
-            Submit
-          </button>
-        );
-      }
+        var submitButton = <Button disabled>Submit</Button>;
 
-      return (
-        <div id="prediction-gallery">
-          <div className="container">
-            <h2 className="center">Make your predictions</h2>
-            <div style={{ display: 'flex' }}>
-              {submitButton}
-              <div style={{ padding: '6px' }}>
-                This button will be enabled once you predict all 7 players. :)
+        if (this.state.predictionArray.length >= 7) {
+          submitButton = (
+            <button onClick={this.handleDialogOpen} className="btn btn-success">
+              Submit
+            </button>
+          );
+        }
+
+        return (
+          <div id="prediction-gallery">
+            <div className="container">
+              <h2 className="center">Make your predictions</h2>
+              <div style={{ display: 'flex' }}>
+                {submitButton}
+                <div style={{ padding: '6px' }}>
+                  This button will be enabled once you predict all 7 players. :)
+              </div>
+              </div>
+              <div id="prediction-gallery-row" className="row">
+                {items}
               </div>
             </div>
-            <div id="prediction-gallery-row" className="row">
-              {items}
-            </div>
-          </div>
 
-          <Dialog
-            open={this.state.open}
-            onClose={this.handleDialogClose}
-            aria-labelledby="Login Failed"
-            aria-describedby="Fail dialog"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {this.state.dialogName}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Are you sure you want to go ahead with this?
+            <Dialog
+              open={this.state.open}
+              onClose={this.handleDialogClose}
+              aria-labelledby="Login Failed"
+              aria-describedby="Fail dialog"
+            >
+              <DialogTitle id="alert-dialog-title">
+                {this.state.dialogName}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Are you sure you want to go ahead with this?
               </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={this.handleDialogClose} color="primary">
-                No
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleDialogClose} color="primary">
+                  No
               </Button>
-              <Button
-                onClick={this.handlePlayerConfirm}
-                color="primary"
-                autoFocus
-              >
-                Yes
+                <Button
+                  onClick={this.handlePlayerConfirm}
+                  color="primary"
+                  autoFocus
+                >
+                  Yes
               </Button>
-            </DialogActions>
-          </Dialog>
+              </DialogActions>
+            </Dialog>
 
-          {/* Using this message dialog for other works also */}
-          {loginMessageDialog}
-        </div>
-      );
+            {/* Using this message dialog for other works also */}
+            {loginMessageDialog}
+          </div>
+        );
+      }
     } // End of login if
     else {
       return (
         <div id="prediction-login">
-          <h1 className="center" style={{ margin: "12px"}}>Prediction Round Login</h1>
+          <h1 className="center" style={{ margin: "12px" }}>Prediction Round Login</h1>
           <LoginHandler submitHandler={this.loginSubmitHandler} />
 
           {loginMessageDialog}

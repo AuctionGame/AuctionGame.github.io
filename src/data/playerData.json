@@ -287,7 +287,7 @@
         "2018": {
             "matches": "1",
             "wickets": "0",
-            "average": "20",
+            "average": "-",
             "economy": "12.66",
             "catches": "0"
         }
@@ -1101,8 +1101,8 @@
         "2019": {
             "matches": "17",
             "wickets": "0",
-            "bowlingAverage": "50",
-            "economy": "10",
+            "bowlingAverage": "-",
+            "economy": "-",
             "runs": "398",
             "battingAverage": "23.41",
             "sr": "127.56",
@@ -1155,8 +1155,8 @@
         "2019": {
             "matches": "16",
             "wickets": "0",
-            "bowlingAverage": "50",
-            "economy": "10",
+            "bowlingAverage": "-",
+            "economy": "-",
             "runs": "279",
             "battingAverage": "34.87",
             "sr": "156.74",
@@ -1165,8 +1165,8 @@
         "2018": {
             "matches": "9",
             "wickets": "0",
-            "bowlingAverage": "50",
-            "economy": "10",
+            "bowlingAverage": "-",
+            "economy": "-",
             "runs": "133",
             "battingAverage": "19.00",
             "sr": "133.00",
@@ -1175,7 +1175,7 @@
         "2017": {
             "matches": "17",
             "wickets": "0",
-            "bowlingAverage": "50",
+            "bowlingAverage": "-",
             "economy": "16.36",
             "runs": "385",
             "battingAverage": "29.61",
