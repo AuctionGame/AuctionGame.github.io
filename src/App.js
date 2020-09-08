@@ -23,7 +23,7 @@ class App extends React.Component {
     // setting the inital state of the App
     this.state = {
       tabValue: 0,
-      round: 'waiting',
+      round: 'quiz',
       messages: ['Hello message 1', 'hello message 2', 'Hello message 3'],
     };
 
@@ -55,7 +55,7 @@ class App extends React.Component {
       (snap) => {
         try {
           console.log('Recieved Round Info', snap.data().pid);
-          this.updateRound(snap.data().pid);
+          //this.updateRound(snap.data().pid);
         } catch (error) {
           console.log('Main fetch failed', error);
         }
@@ -98,7 +98,7 @@ class App extends React.Component {
             >
               <Tab label="Answers" to="/" component={Link} />
               <Tab label="Players" to="/players" component={Link} />
-              <Tab label="Quiz" to="/quiz-scores" component={Link}></Tab>
+              <Tab label="LeaderBoard" to="/quiz-scores" component={Link}></Tab>
             </Tabs>
           </AppBar>
 
@@ -116,6 +116,47 @@ class App extends React.Component {
                   <div className="row">
                     <div className="col-sm-8">
                       <QuizWaiting />
+                    </div>
+                    <div className="col-sm-4">
+                      <Messages />
+                    </div>
+                  </div>
+                </div>
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+      );
+    } else if (round === 'display') {
+      return (
+        <Router>
+          <AppBar position="static" color="transparent" id="nav-bar">
+            <Tabs
+              variant="fullWidth"
+              aria-label="Navigation"
+              value={this.state.tabValue}
+              onChange={this.handleChange}
+            >
+              <Tab label="Players" to="/players" component={Link} />
+              <Tab label="Teams" to="/teams" component={Link} />
+              <Tab label="LeaderBoard" to="/quiz-scores" component={Link}></Tab>
+            </Tabs>
+          </AppBar>
+
+          <div id="main-content">
+            <Switch>
+              <Route path="/teams">
+                <Teams />
+              </Route>
+              <Route path="/quiz-scores">
+                <QuizResult />
+              </Route>
+
+              <Route path="/players">
+                <div className="container-fluid">
+                  <div className="row">
+                    <div className="col-sm-8">
+                      <Player />
                     </div>
                     <div className="col-sm-4">
                       <Messages />
