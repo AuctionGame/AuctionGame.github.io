@@ -55,7 +55,7 @@ class App extends React.Component {
       (snap) => {
         try {
           console.log('Recieved Round Info', snap.data().pid);
-          // this.updateRound(snap.data().pid);
+          this.updateRound(snap.data().pid);
         } catch (error) {
           console.log('Main fetch failed', error);
         }
