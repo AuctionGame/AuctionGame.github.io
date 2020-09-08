@@ -10,6 +10,7 @@ export default class UnselectedTeams extends React.Component {
     this.state = {
       teamDetails: {},
       predictionDict: {},
+      sharesDict : {},
     };
   }
 
@@ -58,6 +59,24 @@ export default class UnselectedTeams extends React.Component {
     } else {
       console.log('prediction is going on');
     }
+    const sharesDict = {};
+    db.collection("priorityPlayers").get().then((snap) => {
+      snap.forEach((doc) => {
+        var playerNo = doc.id;
+        var teamOwners = doc.data()["teams"];
+        var percentShare = Math.floor(100/teamOwners.length);
+        for(var i = 0; i<teamOwners.length; i++){
+          if(!sharesDict[teamOwners[i]]){
+            sharesDict[teamOwners[i]] = {};
+          }
+          sharesDict[teamOwners[i]][playerNo] = percentShare;
+        }
+      })
+      console.log("Shares Dict" , sharesDict)
+      this.setState({
+        sharesDict:sharesDict,
+      })
+    })
   }
 
   render() {
@@ -77,7 +96,10 @@ export default class UnselectedTeams extends React.Component {
       teamCodes.push(teamDetails[key]['teamCode']);
     }
 
+    //sharedDict = teamCode : player : share
+
     for (let key = 1; key < teamCodes.length + 1; key++) {
+      console.log("Sending data of team" , teamCodes[key-1])
       allTeamsComponent.push(
         <TeamCard
           key={key}
@@ -87,6 +109,7 @@ export default class UnselectedTeams extends React.Component {
           teamCode={teamCodes[key - 1]}
           prediction_arr={predictionDict[teamCodes[key - 1]]}
           priority={true}
+          shares = {this.state.sharesDict[teamCodes[key-1]]}
         />,
       );
     }

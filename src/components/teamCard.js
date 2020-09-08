@@ -5,6 +5,13 @@ function TeamCard(props) {
   const teamMember = props.teamMember;
   const teamMemberComponent = [];
   const predictionComponent = [];
+  const shares = props.shares;
+  const boughtSharesComponent = [];
+  console.log("Shares of" , teamMember , shares)
+
+  for(var player in shares){
+    boughtSharesComponent.push(<li>{playerName[player]} - {shares[player]}%</li>) 
+  }
 
   try {
     for (let i = 0; i < teamMember.length; i++) {
@@ -43,9 +50,19 @@ function TeamCard(props) {
           </div>,
         );
       }
+
+      predictionComponent.push(
+        <div className="shares col-sm-2 center" style={{"background": "white" , "border-radius" : "10px" , "max-width": "200px" , "margin-left" : "35px" , "height":"auto" , "overflow":"auto" , }}>
+          <h5 style={{"padding-top":"10px"}}>Purchased Shares</h5>
+          <ul style={{"padding": "0px" , "list-style": "none" , "align-content" : "left" , "text-align" : "left" , "font-size":"13px"}}>
+            {boughtSharesComponent}
+          </ul>
+        </div>
+      )
     } catch (error) {
       console.log('sed life 2');
     }
+
   } else {
     try {
       for (let i = 0; i < props.prediction_arr.predictionArray.length; i++) {
