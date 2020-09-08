@@ -1,6 +1,5 @@
-import React,{Fragment} from "react"
-import playerName from '../data/players.json'
-
+import React, { Fragment } from 'react';
+import playerName from '../data/players.json';
 
 function TeamCard(props) {
   const teamMember = props.teamMember;
@@ -19,19 +18,22 @@ function TeamCard(props) {
     console.log('sed life');
   }
 
-  
-  let title = "Predicted Players"
-  if (props.priority){
-    title = "Chosen Players"
+  let title = 'Predicted Players';
+  if (props.priority) {
+    title = 'Chosen Players';
 
     try {
       for (let i = 0; i < props.prediction_arr.priorityArray.length; i++) {
         const imgSrc = 'cpng/' + props.prediction_arr.priorityArray[i] + '.jpg';
-  
+
         predictionComponent.push(
           <div key={i} className="predictionList col-sm-1">
             <div class="card" style={{ width: '8rem', height: '95%' }}>
-              <img src={imgSrc} class="card-img-top" alt={playerName[props.prediction_arr.priorityArray[i]]} />
+              <img
+                src={imgSrc}
+                class="card-img-top"
+                alt={playerName[props.prediction_arr.priorityArray[i]]}
+              />
               <div class="card-body">
                 <p class="card-text">
                   {playerName[props.prediction_arr.priorityArray[i]]}
@@ -44,15 +46,20 @@ function TeamCard(props) {
     } catch (error) {
       console.log('sed life 2');
     }
-  }else{
+  } else {
     try {
       for (let i = 0; i < props.prediction_arr.predictionArray.length; i++) {
-        const imgSrc = 'cpng/' + props.prediction_arr.predictionArray[i] + '.jpg';
-  
+        const imgSrc =
+          'cpng/' + props.prediction_arr.predictionArray[i] + '.jpg';
+
         predictionComponent.push(
           <div key={i} className="predictionList col-sm-1">
             <div class="card" style={{ width: '8rem', height: '95%' }}>
-              <img src={imgSrc} class="card-img-top" alt={playerName[props.prediction_arr.predictionArray[i]]} />
+              <img
+                src={imgSrc}
+                class="card-img-top"
+                alt={playerName[props.prediction_arr.predictionArray[i]]}
+              />
               <div class="card-body">
                 <p class="card-text">
                   {playerName[props.prediction_arr.predictionArray[i]]}
@@ -76,7 +83,7 @@ function TeamCard(props) {
               <h5 className="teamNames">Team Name - {props.teamName}</h5>
               <h6 className="teamLeaders mb-2 text-muted">
                 {' '}
-                  Team Leader - {props.teamLeader}
+                Team Leader - {props.teamLeader}
               </h6>
               <p className="teamMembers"> Members - {teamMemberComponent}</p>
             </div>

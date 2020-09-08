@@ -1,13 +1,13 @@
 .predictionList {
-    margin-top: 25px;
-    font-size: 12px;
+  margin-top: 25px;
+  font-size: 12px;
 }
 
 .titleOfpredict {
-    margin-left: 50%;
-    margin-top: 20px;
+  margin-left: 50%;
+  margin-top: 20px;
 }
 
 .MuiCard-root {
-    cursor: pointer;
+  cursor: pointer;
 }

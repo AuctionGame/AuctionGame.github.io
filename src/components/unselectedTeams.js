@@ -2,11 +2,9 @@ import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import '../css/teams.css';
-import TeamCard from "./teamCard.js"
-
+import TeamCard from './teamCard.js';
 
 export default class UnselectedTeams extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -63,7 +61,6 @@ export default class UnselectedTeams extends React.Component {
   }
 
   render() {
-
     const teamDetails = this.state.teamDetails;
 
     const teamCodes = [];
@@ -80,7 +77,7 @@ export default class UnselectedTeams extends React.Component {
       teamCodes.push(teamDetails[key]['teamCode']);
     }
 
-    for (let key=1; key<teamCodes.length+1; key++) {
+    for (let key = 1; key < teamCodes.length + 1; key++) {
       allTeamsComponent.push(
         <TeamCard
           key={key}
@@ -89,15 +86,11 @@ export default class UnselectedTeams extends React.Component {
           teamLeader={teamLeaders[key - 1]}
           teamCode={teamCodes[key - 1]}
           prediction_arr={predictionDict[teamCodes[key - 1]]}
-          priority = {true}
+          priority={true}
         />,
       );
     }
 
-    return (
-    
-      <div className="container-fluid">{allTeamsComponent}</div>
-    )
-
+    return <div className="container-fluid">{allTeamsComponent}</div>;
   }
 }

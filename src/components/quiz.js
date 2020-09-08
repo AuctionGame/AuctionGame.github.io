@@ -214,7 +214,7 @@ class Quiz extends React.Component {
               <h3 className="display-4">
                 Question {this.state.currentQuestionNumber}
               </h3>
-              <p className="lead" style={{ whiteSpace: "pre-line"}}>
+              <p className="lead" style={{ whiteSpace: 'pre-line' }}>
                 {this.state.currentQuestion} [{marksOfThisQuestion}]
               </p>
               <hr className="my-4" />

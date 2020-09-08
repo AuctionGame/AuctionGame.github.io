@@ -1,6 +1,6 @@
 import React from 'react';
 import SimplePlayerCard from './SimplePlayerCard';
-import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -20,23 +20,23 @@ class Player extends React.Component {
     this.state = {
       soldDict: {},
       toOpen: false,
-      currentClick: 1
+      currentClick: 1,
     };
     //this.handleDialogOpen = this.handleDialogOpen.bind(this)
   }
 
   handleFailDialogClose = () => {
     this.setState({
-      toOpen: false
-    })
-  }
+      toOpen: false,
+    });
+  };
 
-  handleDialogOpen(i){
+  handleDialogOpen(i) {
     this.setState({
       toOpen: true,
-      currentClick: i
-    })
-    console.log("handle dialog open" , i)
+      currentClick: i,
+    });
+    console.log('handle dialog open', i);
   }
 
   componentDidMount() {
@@ -72,26 +72,33 @@ class Player extends React.Component {
       array.push(i);
     }
 
-    const elementArr = array.map(i => (
-      <SimplePlayerCard key={i} value={i} sold={true} handler={() => this.handleDialogOpen(i)} price={soldDict[i]} colSize="3" />
-    ))
+    const elementArr = array.map((i) => (
+      <SimplePlayerCard
+        key={i}
+        value={i}
+        sold={true}
+        handler={() => this.handleDialogOpen(i)}
+        price={soldDict[i]}
+        colSize="3"
+      />
+    ));
 
     return (
       <div className="container">
         <div className="row">{elementArr}</div>
 
-          <Dialog
+        <Dialog
           open={this.state.toOpen}
           onClose={this.handleFailDialogClose}
           aria-labelledby="Login Failed"
           aria-describedby="Fail dialog"
         >
-          <DialogTitle id="alert-dialog-title" style={{ textAlign: "center" }}>
-           {playerNames[this.state.currentClick]}
+          <DialogTitle id="alert-dialog-title" style={{ textAlign: 'center' }}>
+            {playerNames[this.state.currentClick]}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              <Stats playerNo={this.state.currentClick} /> 
+              <Stats playerNo={this.state.currentClick} />
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -104,7 +111,6 @@ class Player extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-
       </div>
     );
   }

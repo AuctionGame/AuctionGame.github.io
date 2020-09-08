@@ -27,10 +27,9 @@ class Messages extends React.Component {
           try {
             console.log('messages', snap.data());
             this.updateMessages(snap.data()['announcements']);
-          } catch(error) {
+          } catch (error) {
             this.updateMessages(['Fetch Failed']);
           }
-          
         },
         (error) => {
           console.log('Messages Error came', error);
@@ -48,7 +47,7 @@ class Messages extends React.Component {
     return (
       <div className="jumbotron updates-table" id="updates-container">
         <h1 className="center">Updates</h1>
-        <ul style={{overflow: "auto", height:"40vh"}}>{messageEl}</ul>
+        <ul style={{ overflow: 'auto', height: '40vh' }}>{messageEl}</ul>
       </div>
     );
   }

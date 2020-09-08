@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 // import * as firebase from 'firebase';
 import Predict from './predict';
-import "../css/home.css"
+import '../css/home.css';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -35,11 +35,12 @@ function MiddleBlock(props) {
 
     return (
       <Fragment>
-        <h5 className="center" style={{ margin: "12px" }}>Money left with this team : {props.moneyLeft} </h5>
+        <h5 className="center" style={{ margin: '12px' }}>
+          Money left with this team : {props.moneyLeft}{' '}
+        </h5>
         <div className="row">{cardsElementList}</div>
       </Fragment>
-
-    )
+    );
   } else {
     // Above Auction One
 
@@ -51,34 +52,39 @@ function MiddleBlock(props) {
 
       const predictedByList = [];
       try {
-
-        props.predictedByList.forEach(data => {
-          predictedByList.push(
-            <li style={{ marginLeft: "24px" }}>{data}</li>
-          )
+        props.predictedByList.forEach((data) => {
+          predictedByList.push(<li style={{ marginLeft: '24px' }}>{data}</li>);
         });
       } catch (err) {
         // Here error will come when it is prediccted by none
         // i.e predictedByList is empty
-        predictedByList.push(<p className="center"> No Team</p>)
+        predictedByList.push(<p className="center"> No Team</p>);
       }
 
       return (
         <div className="row">
-          <SimplePlayerCard colSize="4" highQuality={true} value={props.round} toShowBidPrice={true} fixedHeight={true} />
+          <SimplePlayerCard
+            colSize="4"
+            highQuality={true}
+            value={props.round}
+            toShowBidPrice={true}
+            fixedHeight={true}
+          />
 
           <div className="col-sm-8">
-
             <Stats key={props.round} playerNo={props.round} />
           </div>
-          <div id="predicted-by-list" className="jumbotron prediction" style={{ margin: "12px" }}>
+          <div
+            id="predicted-by-list"
+            className="jumbotron prediction"
+            style={{ margin: '12px' }}
+          >
             <h3 className="center">Predicted by</h3>
 
             {predictedByList}
-
           </div>
         </div>
-      )
+      );
     }
   }
 }
@@ -91,7 +97,12 @@ function LeftTabs(props) {
   }
 
   return (
-    <ListItem button key={props.value} onClick={props.handler} style={{background: "#b8d0cf", border: "1px solid", margin: "auto"}}>
+    <ListItem
+      button
+      key={props.value}
+      onClick={props.handler}
+      style={{ background: '#b8d0cf', border: '1px solid', margin: 'auto' }}
+    >
       <ListItemText primary={heading} />
     </ListItem>
   );
@@ -113,18 +124,18 @@ class Home extends React.Component {
       },
       currentMain: 0,
       teamCodes: {
-        1: "asdfgh",
-        2: "hgfdsa"
+        1: 'asdfgh',
+        2: 'hgfdsa',
       },
       teamNames: {
-        1: "Team 1",
-        2: "Team 2",
-        3: "Team 3",
-        4: "Team 4",
-        5: "Team 5",
-        6: "Team 6",
-        7: "Team 7",
-        8: "Team 8"
+        1: 'Team 1',
+        2: 'Team 2',
+        3: 'Team 3',
+        4: 'Team 4',
+        5: 'Team 5',
+        6: 'Team 6',
+        7: 'Team 7',
+        8: 'Team 8',
       },
       moneyLeft: {
         1: 100,
@@ -134,13 +145,13 @@ class Home extends React.Component {
         5: 500,
         6: 600,
         7: 700,
-        8: 800
+        8: 800,
       },
       predictionDict: {
         1: [],
         2: [],
-        3: []
-      }
+        3: [],
+      },
     };
   }
 
@@ -155,86 +166,85 @@ class Home extends React.Component {
     const db = firebase.firestore();
 
     // Snapshot for players sold
-    db.collection('team_players')
-      .onSnapshot((snap) => {
-        var empty_dict = {};
-        snap.forEach((doc) => {
-          empty_dict[doc.id] = doc.data();
-        });
-
-        // Empty dict created with all the values
-        this.setState({
-          teams: empty_dict,
-        });
+    db.collection('team_players').onSnapshot((snap) => {
+      var empty_dict = {};
+      snap.forEach((doc) => {
+        empty_dict[doc.id] = doc.data();
       });
 
-    // A simple fetch for team names
-    db.collection('selectedTeams').get()
-      .then((snap) => {
+      // Empty dict created with all the values
+      this.setState({
+        teams: empty_dict,
+      });
+    });
 
-        let teamNamesDict = {}
-        let teamCodesDict = {}
-        snap.forEach(doc => {
+    // A simple fetch for team names
+    db.collection('selectedTeams')
+      .get()
+      .then((snap) => {
+        let teamNamesDict = {};
+        let teamCodesDict = {};
+        snap.forEach((doc) => {
           teamNamesDict[doc.id] = doc.data()['teamName'];
-          teamCodesDict[doc.data()['teamCode']] = doc.id
+          teamCodesDict[doc.data()['teamCode']] = doc.id;
         });
 
         this.setState({
           teamNames: teamNamesDict,
-          teamCodes: teamCodesDict
+          teamCodes: teamCodesDict,
         });
 
         // predictions list to be extracted from firebase
-        db.collection('predictions').get()
+        db.collection('predictions')
+          .get()
           .then((snap) => {
-            let predictedTeams = {}
+            let predictedTeams = {};
 
-            snap.forEach(doc => {
-
-              const predictionArray = doc.data()['predictionArray']
+            snap.forEach((doc) => {
+              const predictionArray = doc.data()['predictionArray'];
               for (let i = 0; i < predictionArray.length; i++) {
                 if (predictedTeams[predictionArray[i]]) {
-                  predictedTeams[predictionArray[i]].push(teamNamesDict[teamCodesDict[doc.id]])
-                }
-                else {
-                  predictedTeams[predictionArray[i]] = [teamNamesDict[teamCodesDict[doc.id]]]
+                  predictedTeams[predictionArray[i]].push(
+                    teamNamesDict[teamCodesDict[doc.id]],
+                  );
+                } else {
+                  predictedTeams[predictionArray[i]] = [
+                    teamNamesDict[teamCodesDict[doc.id]],
+                  ];
                 }
               }
-
             });
 
             this.setState({
-              predictionDict: predictedTeams
+              predictionDict: predictedTeams,
             });
-
-          }).catch(error => {
-            console.log("Team Name Fetch failed");
+          })
+          .catch((error) => {
+            console.log('Team Name Fetch failed');
           });
-
-      }).catch(error => {
-        console.log("Team Name Fetch failed");
+      })
+      .catch((error) => {
+        console.log('Team Name Fetch failed');
       });
 
-
     // A snapshot for money left
-    db.collection('selectedTeams')
-      .onSnapshot((snap) => {
-
+    db.collection('selectedTeams').onSnapshot(
+      (snap) => {
         let moneyLeftDict = {};
         snap.forEach((doc) => {
           moneyLeftDict[doc.id] = doc.data()['money'];
         });
 
         this.setState({
-          moneyLeft: moneyLeftDict
+          moneyLeft: moneyLeftDict,
         });
 
-        console.log(this.state.moneyLeft)
-
-      }, (error) => {
-        console.log("Money left snapshot failed", error);
-      });
-
+        console.log(this.state.moneyLeft);
+      },
+      (error) => {
+        console.log('Money left snapshot failed', error);
+      },
+    );
   }
 
   render() {

@@ -30,7 +30,7 @@ export default function SimplePlayerCard(props) {
    */
 
   let imgSrc = 'cpng/' + props.value + '.jpg';
-  if(props.highQuality) {
+  if (props.highQuality) {
     imgSrc = 'images/png/' + props.value + '.png';
   }
 
@@ -45,19 +45,18 @@ export default function SimplePlayerCard(props) {
   }
 
   var priceSection = '';
-  var bought = 'col-sm-'+ colToUse +' not-sold-player';
+  var bought = 'col-sm-' + colToUse + ' not-sold-player';
   if (props.price) {
     priceSection = <p>Sold Rs. {props.price}</p>;
     if (props.sold) {
-      bought = 'col-sm-'+ colToUse +' sold-player';
+      bought = 'col-sm-' + colToUse + ' sold-player';
     }
   }
 
   let bidPrice = '';
   if (props.toShowBidPrice) {
-  bidPrice = <p>Starting Bid Rs. {bidprice[props.value]}</p>
+    bidPrice = <p>Starting Bid Rs. {bidprice[props.value]}</p>;
   }
-  
 
   return (
     <div className={bought} onClick={props.handler}>
