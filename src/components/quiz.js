@@ -36,6 +36,8 @@ class Quiz extends React.Component {
         8: '',
         9: '',
         10: '',
+        11: '',
+        12: '',
       },
       loginFail: false,
     };
@@ -77,7 +79,7 @@ class Quiz extends React.Component {
 
     var newQno = this.state.currentQuestionNumber + 1;
 
-    if (newQno > 10) {
+    if (newQno > 12) {
       newQno = 1;
     }
 
@@ -184,7 +186,7 @@ class Quiz extends React.Component {
     if (this.state.userID) {
       //  for the questions tabs
       const tabs = () => {
-        var total = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        var total = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         return total.map((i) => {
           var colorType = 'btn-success';
           if (!this.state.answerDict[i]) {
