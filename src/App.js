@@ -96,7 +96,7 @@ class App extends React.Component {
               value={this.state.tabValue}
               onChange={this.handleChange}
             >
-              <Tab label="Answers" to="/QuizWaiting" component={Link} />
+              <Tab label="Answers" to="/" component={Link} />
               <Tab label="Players" to="/players" component={Link} />
               <Tab label="Quiz" to="/quiz-scores" component={Link}></Tab>
             </Tabs>
