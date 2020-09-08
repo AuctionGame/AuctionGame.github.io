@@ -29,7 +29,7 @@ class Predict extends React.Component {
       loginFail: false,
       loginFailHeading: 'Login Unsuccessful',
       loginFailDesc: 'Please check you secret Id and try again!',
-      toShowPriority: true,
+      toShowPriority: false,
     };
 
     this.handleFailDialogClose = this.handleFailDialogClose.bind(this);
