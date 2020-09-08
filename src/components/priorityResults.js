@@ -38,11 +38,13 @@ export default class PriorityResults extends React.Component {
   render() {
     const scorecard = this.state.scorecard;
     const tableToCreate = [];
-
+    var i = 0
     for (let key in scorecard) {
+      i = i+1
       tableToCreate.push(
         <Fragment key={key}>
           <tr className="table-info" style={{ textAlign: 'center' }}>
+            <td>{i}</td>
             <td>{scorecard[key][0]}</td>
             <td>{scorecard[key][1]}</td>
           </tr>
@@ -63,6 +65,7 @@ export default class PriorityResults extends React.Component {
         >
           <thead className="thead-dark">
             <tr style={{ textAlign: 'center' }}>
+              <th>Rank</th>
               <th>Team Name</th>
               <th>Money</th>
             </tr>
