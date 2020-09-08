@@ -10,8 +10,7 @@
 }
 
 .App {
-  text-align: center
-   ;
+  text-align: center;
 }
 
 #loading {
@@ -92,11 +91,10 @@ header {
 } */
 
 .jumbotron {
-  background-color: #b8d0cf
-
+  background-color: #b8d0cf;
 }
 
-#navbar{
+#navbar {
   padding-top: 10px;
   padding-bottom: 10px;
   background: aliceblue;
@@ -104,5 +102,14 @@ header {
 }
 
 #navbar div {
-  cursor: pointer; 
+  cursor: pointer;
+}
+
+#updates-container {
+  padding: 16px 24px;
+}
+
+#updates-container ul {
+  list-style-type: disc;
+  font-size: x-large; 
 }

@@ -24,8 +24,12 @@ class Messages extends React.Component {
       .doc('updates')
       .onSnapshot(
         (snap) => {
-          console.log('messages', snap.data());
-          this.updateMessages(snap.data()['announcements']);
+          try {
+            console.log('messages', snap.data());
+            this.updateMessages(snap.data()['announcements']);
+          } catch (error) {
+            this.updateMessages(['Fetch Failed']);
+          }
         },
         (error) => {
           console.log('Messages Error came', error);
@@ -34,16 +38,20 @@ class Messages extends React.Component {
   }
 
   render() {
-    const messageEl = ['Latest First'];
+    const messageEl = [];
     const messagesArray = this.state.messagesArray;
     for (let i = messagesArray.length - 1; i >= 0; i--) {
-      messageEl.push(<li key={i}>{messagesArray[i]}</li>);
+      if (i === messagesArray.length - 1) {
+        messageEl.push(<li key={i} className="text-primary">{messagesArray[i]}</li>);
+      } else {
+        messageEl.push(<li key={i}>{messagesArray[i]}</li>);
+      }
     }
 
     return (
       <div className="jumbotron updates-table" id="updates-container">
         <h1 className="center">Updates</h1>
-        <ul style={{overflow: "auto", height:"40vh"}}>{messageEl}</ul>
+        <ul style={{ overflow: 'auto', height: '40vh' }}>{messageEl}</ul>
       </div>
     );
   }

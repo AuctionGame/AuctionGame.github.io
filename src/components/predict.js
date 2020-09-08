@@ -29,7 +29,7 @@ class Predict extends React.Component {
       loginFail: false,
       loginFailHeading: 'Login Unsuccessful',
       loginFailDesc: 'Please check you secret Id and try again!',
-      toShowPriority: true
+      toShowPriority: true,
     };
 
     this.handleFailDialogClose = this.handleFailDialogClose.bind(this);
@@ -63,25 +63,21 @@ class Predict extends React.Component {
                   predictionArray: predictionData,
                 });
               },
-              (err) => { },
+              (err) => {},
             );
         } else {
-
-          // This means he is not in predictions, let's also check for 
+          // This means he is not in predictions, let's also check for
 
           db.collection('priority')
             .doc(val)
             .get()
             .then((doc2) => {
               if (doc2.exists) {
-
                 this.setState({
                   toShowPriority: true,
-                  loginId: val
-                })
-
+                  loginId: val,
+                });
               } else {
-
                 // No such players exists!
                 this.setState({
                   loginFail: true,
@@ -89,14 +85,12 @@ class Predict extends React.Component {
               }
             })
             .catch((error) => {
-              alert("Network Error");
+              alert('Network Error');
             });
-
-
         } // Enf of first predictions else
       })
-      .catch(error => {
-        alert("Network error");
+      .catch((error) => {
+        alert('Network error');
       });
   }
 
@@ -214,15 +208,11 @@ class Predict extends React.Component {
       // document.getElementById('submitBtn').disabled = false -----> write this in reachJS :p
 
       if (this.state.toShowPriority) {
-        return (
-          <Priority loginId={this.state.loginId} />
-        )
+        return <Priority loginId={this.state.loginId} />;
       } else {
-
         // This is for predictions
         const items = [];
         for (let i = 1; i <= 60; i++) {
-          
           var status = this.state.predictionArray.includes(i);
           items.push(
             <MyCard
@@ -254,7 +244,7 @@ class Predict extends React.Component {
                 {submitButton}
                 <div style={{ padding: '6px' }}>
                   This button will be enabled once you predict all 7 players. :)
-              </div>
+                </div>
               </div>
               <div id="prediction-gallery-row" className="row">
                 {items}
@@ -273,19 +263,19 @@ class Predict extends React.Component {
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
                   Are you sure you want to go ahead with this?
-              </DialogContentText>
+                </DialogContentText>
               </DialogContent>
               <DialogActions>
                 <Button onClick={this.handleDialogClose} color="primary">
                   No
-              </Button>
+                </Button>
                 <Button
                   onClick={this.handlePlayerConfirm}
                   color="primary"
                   autoFocus
                 >
                   Yes
-              </Button>
+                </Button>
               </DialogActions>
             </Dialog>
 
@@ -298,7 +288,9 @@ class Predict extends React.Component {
     else {
       return (
         <div id="prediction-login">
-          <h1 className="center" style={{ margin: "12px" }}>Prediction Round Login</h1>
+          <h1 className="center" style={{ margin: '12px' }}>
+            Prediction Round Login
+          </h1>
           <LoginHandler submitHandler={this.loginSubmitHandler} />
 
           {loginMessageDialog}

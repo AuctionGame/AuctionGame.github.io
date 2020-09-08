@@ -23,7 +23,7 @@ class App extends React.Component {
     // setting the inital state of the App
     this.state = {
       tabValue: 0,
-      round: 'auction',
+      round: 'waiting',
       messages: ['Hello message 1', 'hello message 2', 'Hello message 3'],
     };
 
@@ -53,8 +53,12 @@ class App extends React.Component {
 
     doc.onSnapshot(
       (snap) => {
-        console.log('Recieved Round Info', snap.data().pid);
-        // this.updateRound(snap.data().pid);
+        try {
+          console.log('Recieved Round Info', snap.data().pid);
+          // this.updateRound(snap.data().pid);
+        } catch (error) {
+          console.log('Main fetch failed', error);
+        }
       },
       (err) => {
         console.log(`Encountered error: ${err}`);
@@ -85,20 +89,20 @@ class App extends React.Component {
     } else if (round === 'waiting') {
       return (
         <Router>
-        <AppBar position="static" color="transparent" id="nav-bar">
-          <Tabs
-            variant="fullWidth"
-            aria-label="Navigation"
-            value={this.state.tabValue}
-            onChange={this.handleChange}
-          >
-            <Tab label="Answers" to="/QuizWaiting" component={Link} />
-            <Tab label="Players" to="/players" component={Link} />
-            <Tab label="Quiz" to="/quiz-scores" component={Link} ></Tab>
-          </Tabs>
-        </AppBar>
+          <AppBar position="static" color="transparent" id="nav-bar">
+            <Tabs
+              variant="fullWidth"
+              aria-label="Navigation"
+              value={this.state.tabValue}
+              onChange={this.handleChange}
+            >
+              <Tab label="Answers" to="/" component={Link} />
+              <Tab label="Players" to="/players" component={Link} />
+              <Tab label="Quiz" to="/quiz-scores" component={Link}></Tab>
+            </Tabs>
+          </AppBar>
 
-        <div id="main-content">
+          <div id="main-content">
             <Switch>
               <Route path="/players">
                 <Player />
@@ -106,22 +110,22 @@ class App extends React.Component {
               <Route path="/quiz-scores">
                 <QuizResult />
               </Route>
-           
-            <Route path="/quizWaiting">
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-sm-8">
-              <QuizWaiting />
-            </div>
-            <div className="col-sm-4">
-              <Messages />
-            </div>
+
+              <Route path="/">
+                <div className="container-fluid">
+                  <div className="row">
+                    <div className="col-sm-8">
+                      <QuizWaiting />
+                    </div>
+                    <div className="col-sm-4">
+                      <Messages />
+                    </div>
+                  </div>
+                </div>
+              </Route>
+            </Switch>
           </div>
-        </div>
-        </Route>
-        </Switch>
-        </div>
-      </Router>
+        </Router>
       );
     } else {
       // The main content and routes everything
@@ -137,7 +141,7 @@ class App extends React.Component {
               <Tab label="Home" to="/" component={Link} />
               <Tab label="Players" to="/players" component={Link} />
               <Tab label="Teams" to="/teams" component={Link} />
-              <Tab label="Quiz" to="/quiz-scores" component={Link} ></Tab>
+              <Tab label="LeaderBoard" to="/quiz-scores" component={Link}></Tab>
             </Tabs>
           </AppBar>
 
@@ -147,7 +151,7 @@ class App extends React.Component {
                 <Player />
               </Route>
               <Route path="/teams">
-                <Teams round={this.state.round}/>
+                <Teams round={this.state.round} />
               </Route>
               <Route path="/quiz-scores">
                 <QuizResult />
