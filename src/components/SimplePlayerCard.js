@@ -57,7 +57,6 @@ export default function SimplePlayerCard(props) {
   if (props.toShowBidPrice) {
   bidPrice = <p>Starting Bid Rs. {bidprice[props.value]}</p>
   }
-
   
 
   return (

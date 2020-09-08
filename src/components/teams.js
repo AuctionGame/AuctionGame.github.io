@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import '../css/teams.css';
-import playerName from '../data/players.json';
 import UnseletedTeams from "./unselectedTeams"
 import TeamCard from "./teamCard.js"
 
@@ -86,7 +85,6 @@ class Teams extends React.Component {
     const teamMembers = [];
     const teamLeaders = [];
     const allTeamsComponent = [];
-    const predictionComponent = [];
     const predictionDict = this.state.predictionDict;
 
     for (let key in teamDetails) {

@@ -23,7 +23,7 @@ class App extends React.Component {
     // setting the inital state of the App
     this.state = {
       tabValue: 0,
-      round: 'auction',
+      round: '1',
       messages: ['Hello message 1', 'hello message 2', 'Hello message 3'],
     };
 
@@ -53,8 +53,13 @@ class App extends React.Component {
 
     doc.onSnapshot(
       (snap) => {
-        console.log('Recieved Round Info', snap.data().pid);
-        // this.updateRound(snap.data().pid);
+        try {
+          console.log('Recieved Round Info', snap.data().pid);
+          // this.updateRound(snap.data().pid);
+        } catch (error) {
+          console.log("Main fetch failed", error);
+        }
+        
       },
       (err) => {
         console.log(`Encountered error: ${err}`);
@@ -137,7 +142,7 @@ class App extends React.Component {
               <Tab label="Home" to="/" component={Link} />
               <Tab label="Players" to="/players" component={Link} />
               <Tab label="Teams" to="/teams" component={Link} />
-              <Tab label="Quiz" to="/quiz-scores" component={Link} ></Tab>
+              <Tab label="LeaderBoard" to="/quiz-scores" component={Link} ></Tab>
             </Tabs>
           </AppBar>
 

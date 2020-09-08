@@ -42,7 +42,6 @@ class Priority extends React.Component {
     //console.log("Add this to priorty", i);
 
     const priorityList = this.state.priorityList;
-    const bidPriceDict = this.state.bidPriceDict;
     const curCategory = bidprice[i];
     let curCount = 1;
 
@@ -51,7 +50,7 @@ class Priority extends React.Component {
       priorityList.splice(indexx, 1);
     } else { // This is for adding player to priority list
       for (var j = 0; j < priorityList.length; j++) {
-        if (bidprice[priorityList[j]] == curCategory)
+        if (bidprice[priorityList[j]] === curCategory)
           curCount += 1;
       }
       if (curCount > allowedCount[curCategory]) {

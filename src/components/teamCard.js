@@ -31,7 +31,7 @@ function TeamCard(props) {
         predictionComponent.push(
           <div key={i} className="predictionList col-sm-1">
             <div class="card" style={{ width: '8rem', height: '95%' }}>
-              <img src={imgSrc} class="card-img-top" />
+              <img src={imgSrc} class="card-img-top" alt={playerName[props.prediction_arr.priorityArray[i]]} />
               <div class="card-body">
                 <p class="card-text">
                   {playerName[props.prediction_arr.priorityArray[i]]}
@@ -52,7 +52,7 @@ function TeamCard(props) {
         predictionComponent.push(
           <div key={i} className="predictionList col-sm-1">
             <div class="card" style={{ width: '8rem', height: '95%' }}>
-              <img src={imgSrc} class="card-img-top" />
+              <img src={imgSrc} class="card-img-top" alt={playerName[props.prediction_arr.predictionArray[i]]} />
               <div class="card-body">
                 <p class="card-text">
                   {playerName[props.prediction_arr.predictionArray[i]]}

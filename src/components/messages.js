@@ -24,8 +24,13 @@ class Messages extends React.Component {
       .doc('updates')
       .onSnapshot(
         (snap) => {
-          console.log('messages', snap.data());
-          this.updateMessages(snap.data()['announcements']);
+          try {
+            console.log('messages', snap.data());
+            this.updateMessages(snap.data()['announcements']);
+          } catch(error) {
+            this.updateMessages(['Fetch Failed']);
+          }
+          
         },
         (error) => {
           console.log('Messages Error came', error);
