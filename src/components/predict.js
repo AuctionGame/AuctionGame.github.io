@@ -25,7 +25,7 @@ class Predict extends React.Component {
       open: false,
       dialogName: 'Confirm',
       confirmNumber: 0,
-      loginId: 'mockteam2',
+      loginId: '',
       loginFail: false,
       loginFailHeading: 'Login Unsuccessful',
       loginFailDesc: 'Please check you secret Id and try again!',
