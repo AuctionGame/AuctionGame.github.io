@@ -49,11 +49,11 @@ export default class QuizWaiting extends React.Component {
     for (var key in questions) {
       answersComponent.push(
         <div key={key} className="answers-block jumbotron">
-          <p>
+          <p style={{ whiteSpace: 'pre-line' }}>
             {' '}
             {key} : {questions[key]}{' '}
           </p>
-          <h4>
+          <h4 style={{ whiteSpace: 'pre-line' }}>
             {' '}
             Answer {key} : {correctAnswers[key]}
           </h4>
@@ -61,6 +61,6 @@ export default class QuizWaiting extends React.Component {
       );
     }
 
-    return <div className="container">{answersComponent}</div>;
+    return <div className="container"> {answersComponent}</div>;
   }
 }

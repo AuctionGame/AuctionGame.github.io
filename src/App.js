@@ -23,7 +23,7 @@ class App extends React.Component {
     // setting the inital state of the App
     this.state = {
       tabValue: 0,
-      round: '1',
+      round: 'waiting',
       messages: ['Hello message 1', 'hello message 2', 'Hello message 3'],
     };
 
@@ -111,7 +111,7 @@ class App extends React.Component {
                 <QuizResult />
               </Route>
 
-              <Route path="/quizWaiting">
+              <Route path="/">
                 <div className="container-fluid">
                   <div className="row">
                     <div className="col-sm-8">

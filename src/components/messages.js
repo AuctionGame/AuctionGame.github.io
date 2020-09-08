@@ -38,10 +38,14 @@ class Messages extends React.Component {
   }
 
   render() {
-    const messageEl = ['Latest First'];
+    const messageEl = [];
     const messagesArray = this.state.messagesArray;
     for (let i = messagesArray.length - 1; i >= 0; i--) {
-      messageEl.push(<li key={i}>{messagesArray[i]}</li>);
+      if (i === messagesArray.length - 1) {
+        messageEl.push(<li key={i} className="text-primary">{messagesArray[i]}</li>);
+      } else {
+        messageEl.push(<li key={i}>{messagesArray[i]}</li>);
+      }
     }
 
     return (
